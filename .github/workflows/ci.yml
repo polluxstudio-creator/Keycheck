@@ -1,0 +1,40 @@
+# Valida el sitio en cada push: build + suite end-to-end.
+# El despliegue lo hace Cloudflare (Workers Builds) al hacer push a main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build the static site
+        run: npm run build
+
+      - name: Check the generated files
+        run: |
+          test -f dist/index.html
+          test -f dist/sitemap.xml
+          test -f dist/robots.txt
+          test -f dist/ads.txt
+          test -f dist/.nojekyll
+          echo "dist/ contiene $(find dist -type f | wc -l) ficheros"
+
+      - name: End-to-end tests (Chromium)
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+          node --test tests/e2e.test.mjs

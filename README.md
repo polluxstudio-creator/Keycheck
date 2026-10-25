@@ -105,6 +105,32 @@ npm run build
 # luego sube el contenido de dist/ a tu hosting
 ```
 
+### Cloudflare Workers (el hosting usado en este proyecto)
+
+El repo está conectado a **Cloudflare → Workers & Pages → keycheck**, así que cada `push` a
+`main` compila y publica el sitio automáticamente. Configura en **Settings → Builds &
+deployments**:
+
+| Ajuste | Valor |
+|---|---|
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | *(vacío)* |
+| Node version | `20` (o `18`+) |
+| Environment variables | ninguna — el build no tiene dependencias |
+
+El build no necesita `npm install`: no hay dependencias de producción. `dist/.nojekyll` se
+genera solo para que GitHub Pages sirva los ficheros tal cual.
+
+Para tener URL pública hay dos vías:
+
+1. **Subdominio workers.dev**: *Workers & Pages → keycheck → Settings → Domains & Routes →
+   Add → Workers subdomain*. Te da una URL del tipo `https://keycheck.<tu-subdominio>.workers.dev`.
+2. **Dominio propio**: *Add → Custom domain* y apuntas el CNAME que te indica Cloudflare.
+
+**Después de obtener la URL**, actualiza `site.url` en `config/site.json` (de ahí salen el
+canonical, el sitemap, `robots.txt` y la imagen Open Graph) y haz push.
+
 Opciones habituales:
 
 | Hosting | Pasos |
@@ -124,9 +150,10 @@ Requisitos del servidor:
 - `ads.txt` debe servirse en la raíz del dominio (`https://tudominio.com/ads.txt`) — ya se genera
   en `dist/ads.txt`; solo tienes que pegarle la línea real de tu cuenta de AdSense.
 
-**Antes de publicar:** cambia `site.url` en `config/site.json` por tu dominio real y recompila
+**Antes de publicar:** cambia `site.url` en `config/site.json` por el dominio real y recompila
 (`npm run build`). El canonical, el sitemap, el robots.txt y las URLs de Open Graph se generan a
-partir de ese valor.
+partir de ese valor. El email de contacto (`site.contactEmail`) también sale de ahí: se inyecta
+en el pie de página y en el formulario de contacto.
 
 ---
 
