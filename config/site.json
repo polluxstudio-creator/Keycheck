@@ -1,0 +1,95 @@
+{
+  "site": {
+    "name": "KEYCHECK",
+    "tagline": "Free Online Keyboard & Mouse Tester",
+    "url": "https://polluxstudio-creator.github.io/Keycheck",
+    "description": "Test every key and every mouse button directly in your browser. Free, private and instant — check key response, mouse buttons, scroll wheel and double-click behaviour without installing anything.",
+    "locale": "en",
+    "lang": "en",
+    "themeColor": "#0d0f12",
+    "twitterHandle": "@keycheckapp",
+    "contactEmail": "contact@keycheck.app"
+  },
+  "consent": {
+    "enabled": true,
+    "requireConsentBeforeAds": true,
+    "storageKey": "keycheck.consent.v1",
+    "revisitDays": 180
+  },
+  "adsense": {
+    "enabled": false,
+    "publisherId": "",
+    "autoAds": false,
+    "enabledPlacements": [
+      "header",
+      "sidebar",
+      "belowTester",
+      "betweenSections"
+    ],
+    "slots": {
+      "header": "",
+      "sidebar": "",
+      "belowTester": "",
+      "betweenSections": ""
+    },
+    "formats": {
+      "header": "horizontal",
+      "sidebar": "vertical",
+      "belowTester": "horizontal",
+      "betweenSections": "horizontal"
+    },
+    "minViewportWidth": {
+      "header": 0,
+      "sidebar": 1024,
+      "belowTester": 0,
+      "betweenSections": 0
+    },
+    "reserveHeight": {
+      "header": 285,
+      "sidebar": 625,
+      "belowTester": 285,
+      "betweenSections": 285
+    },
+    "label": "Advertisement",
+    "reserveHeightNote": "Altura TOTAL del hueco (etiqueta + unidad). El valor por defecto (285) cubre una unidad responsiva de 300x250; ajústalo al tuyo: ~115 para 728x90, ~285 para 300x250, ~625 para 300x600 vertical."
+  },
+  "seo": {
+    "pages": [
+      {
+        "path": "index.html",
+        "priority": "1.0",
+        "changefreq": "weekly"
+      },
+      {
+        "path": "guides/diagnostico.html",
+        "priority": "0.8",
+        "changefreq": "monthly"
+      },
+      {
+        "path": "guides/faq.html",
+        "priority": "0.8",
+        "changefreq": "monthly"
+      },
+      {
+        "path": "about.html",
+        "priority": "0.5",
+        "changefreq": "yearly"
+      },
+      {
+        "path": "contact.html",
+        "priority": "0.5",
+        "changefreq": "yearly"
+      },
+      {
+        "path": "privacy.html",
+        "priority": "0.3",
+        "changefreq": "yearly"
+      },
+      {
+        "path": "terms.html",
+        "priority": "0.3",
+        "changefreq": "yearly"
+      }
+    ]
+  }
+}

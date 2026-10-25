@@ -1,0 +1,54 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <h2>{{SITE_NAME}}</h2>
+        <p>
+          A free online keyboard and mouse tester. Everything runs locally in your browser: the keys you press
+          and the clicks you make are never uploaded or stored.
+        </p>
+      </div>
+      <div>
+        <h2>Guides</h2>
+        <ul>
+          <li><a href="{{BASE}}guides/diagnostico.html">Keyboard &amp; mouse diagnostics</a></li>
+          <li><a href="{{BASE}}guides/faq.html">Frequently asked questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="{{BASE}}privacy.html">Privacy Policy</a></li>
+          <li><a href="{{BASE}}terms.html">Terms of Use</a></li>
+          <li>
+            <button type="button" class="linkish" data-consent-settings>Cookie settings</button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="{{BASE}}contact.html">Contact page</a></li>
+          <li><a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; {{YEAR}} {{SITE_NAME}}. All rights reserved.</span>
+      <span>Free tool &middot; Advertising is the only monetisation &middot; No data collection</span>
+    </div>
+  </div>
+</footer>
+
+<div class="consent" id="consent-banner" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text" data-open="false">
+  <h2 id="consent-title">Cookies and advertising</h2>
+  <p id="consent-text">
+    KEYCHECK itself stores nothing about you. If advertising is enabled, this site and Google AdSense may use
+    cookies to serve and measure ads. Choose whether to allow advertising cookies.
+    Read the <a href="{{BASE}}privacy.html">Privacy Policy</a>.
+  </p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary btn--sm" data-consent-accept>Accept advertising cookies</button>
+    <button type="button" class="btn btn--sm" data-consent-decline>Decline</button>
+  </div>
+</div>

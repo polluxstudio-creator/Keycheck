@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy | {{SITE_NAME}}</title>
+<meta name="description" content="How KEYCHECK handles your data: keystrokes and clicks are processed locally in your browser and never uploaded. Ads, cookies and your rights.">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="{{THEME_COLOR}}">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{SITE_NAME}}">
+<meta property="og:title" content="Privacy Policy | {{SITE_NAME}}">
+<meta property="og:description" content="Keystrokes and clicks are processed locally in your browser and never uploaded.">
+<meta property="og:url" content="{{CANONICAL}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Privacy Policy | {{SITE_NAME}}">
+<meta name="twitter:description" content="Keystrokes and clicks are processed locally in your browser and never uploaded.">
+<meta name="twitter:image" content="{{OG_IMAGE}}">
+
+<link rel="icon" href="{{BASE}}assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{BASE}}assets/img/apple-touch-icon.png">
+<link rel="manifest" href="{{BASE}}site.webmanifest">
+<link rel="stylesheet" href="{{BASE}}assets/css/styles.css">
+</head>
+<body>
+
+<!-- @include header -->
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero__eyebrow"><span aria-hidden="true">●</span> Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="lead">
+        The short version: the keys you press and the clicks you make are processed inside your own browser and are
+        never sent to us. This page explains that in detail, along with the advertising technologies that a site
+        like this may use and the rights you have over them.
+      </p>
+    </section>
+
+    <div class="ad-slot" data-ad-placement="header" aria-label="Advertisement"></div>
+
+    <div class="layout">
+      <div class="layout__main">
+        <article class="prose">
+          <p><small>Last updated: {{YEAR}}. This policy describes how this deployment of {{SITE_NAME}} behaves.</small></p>
+
+          <h2>1. Summary</h2>
+          <ul>
+            <li>The keyboard and mouse tester runs entirely in your browser. What you type and click is <strong>not</strong> transmitted to any server and is <strong>not</strong> stored anywhere.</li>
+            <li>There is no account system, no analytics package and no behaviour tracking in the tool.</li>
+            <li>This site may display advertising served by Google AdSense. That is the only third-party technology involved, and it is only loaded after you make a consent choice.</li>
+            <li>The only thing this site stores on your device is your consent decision, in your browser's local storage.</li>
+          </ul>
+
+          <h2>2. Who is responsible for this site</h2>
+          <p>
+            {{SITE_NAME}} is an independent project. Questions about this policy or about your data can be sent to
+            <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> or through the
+            <a href="{{BASE}}contact.html">contact page</a>.
+          </p>
+
+          <h2>3. What happens to your keystrokes and mouse clicks</h2>
+          <p>
+            The tester attaches a listener to the <code>keydown</code>, <code>keyup</code>, <code>mousedown</code>,
+            <code>mousemove</code> and <code>wheel</code> events of the page. When an event fires, the JavaScript in
+            your browser updates a number on the screen.
+          </p>
+          <p>Concretely, this means:</p>
+          <ul>
+            <li>The <strong>content</strong> of what you type never leaves the page. The code only reads the physical key identifier (for example <code>KeyA</code>) to know which key to highlight.</li>
+            <li>No text you type is written into cookies, into local storage, into the URL, or into any server request.</li>
+            <li>The counters exist only in the memory of the open page and are discarded when you close or reload the tab.</li>
+            <li>There is no keylogging functionality in this tool, and there is no code that would let one be added without changing the page itself.</li>
+          </ul>
+          <div class="notice notice--green">
+            <strong>One caveat, stated honestly:</strong> if you are using an extension, a keyboard logger, a remote
+            desktop tool or an operating system with a keylogging accessibility feature, that software operates
+            outside this page and outside our control. Nothing on this site prevents it.
+          </div>
+
+          <h2>4. Data stored in your browser</h2>
+          <p>
+            When advertising is enabled, this site stores a single record in your browser's local storage to remember
+            your consent decision and the date you made it:
+          </p>
+          <ul>
+            <li><strong>Name:</strong> <code>keycheck.consent.v1</code></li>
+            <li><strong>Content:</strong> your choice (<code>granted</code> or <code>denied</code>) and a timestamp</li>
+            <li><strong>Purpose:</strong> to avoid asking again on every visit and to keep advertising cookies switched off while you have declined</li>
+          </ul>
+          <p>
+            This record is not linked to any identifier, is never sent to us and can be removed at any time by
+            clearing the site data of this site in your browser. You can also change your decision whenever you want
+            through the <em>Cookie settings</em> link in the footer.
+          </p>
+
+          <h2>5. Advertising</h2>
+          <p>
+            {{SITE_NAME}} is funded by advertising. The site is prepared to serve ads through
+            <a href="https://support.google.com/adsense/" rel="nofollow noopener" target="_blank">Google AdSense</a>.
+            On deployments where advertising is switched on:
+          </p>
+          <ul>
+            <li>Google may use cookies and similar technologies to serve ads and to measure how they perform.</li>
+            <li>Google and its partners may use the information from your visit to show ads based on your prior activity on this and other websites. Where you have consented to personalised advertising, this may include interest-based advertising.</li>
+            <li>Google's use of advertising cookies enables it and its partners to serve ads based on your visits to this and/or other sites.</li>
+            <li>Third-party vendors, including Google, may use cookies to serve ads based on the content of this site and/or the ad you clicked on.</li>
+          </ul>
+          <p>
+            The advertising code is loaded only after you accept advertising cookies. If you decline, no advertising
+            script is requested from Google at all and the page contains no ad slots. On deployments where advertising
+            is switched off in the configuration, the same applies permanently: no advertising code is loaded and no
+            ad space is reserved.
+          </p>
+          <p>You can find out more about how Google uses data on advertising sites here:</p>
+          <ul>
+            <li><a href="https://policies.google.com/technologies/ads" rel="nofollow noopener" target="_blank">How Google uses data from sites and apps that use our services</a></li>
+            <li><a href="https://support.google.com/adsense/answer/1348685" rel="nofollow noopener" target="_blank">AdSense policies for publishers and publishers' sites</a></li>
+            <li><a href="https://www.google.com/settings/ads" rel="nofollow noopener" target="_blank">Change your Google ad settings</a></li>
+            <li><a href="https://optout.aboutads.info/" rel="nofollow noopener" target="_blank">Opt out of interest-based advertising</a></li>
+          </ul>
+
+          <h2>6. Consent management</h2>
+          <p>
+            When advertising is active, a consent banner asks you to accept or decline advertising cookies before
+            anything is loaded from Google. Your choice is remembered locally and can be changed later through the
+            <em>Cookie settings</em> link in the footer. If you decline, advertising code is not loaded.
+          </p>
+          <p>
+            Websites that include Google AdSense are commonly required to use Google's own consent management
+            platform (Google Funding Choices) rather than a self-built banner, because it reflects the consent
+            signals Google needs. If you deploy this site with advertising enabled, use the consent platform that
+            Google provides for your account — that is the configuration we recommend.
+          </p>
+
+          <h2>7. Server logs</h2>
+          <p>
+            The host that serves this site keeps its own technical logs, which typically include the requested URL,
+            the time of the request, the IP address and the user agent. Those logs are created by the hosting
+            provider, not by the tester, they are used for security and troubleshooting, and they are governed by the
+            provider's own privacy policy. The pages of this site do not contain analytics scripts.
+          </p>
+
+          <h2>8. External links and embedded content</h2>
+          <p>
+            Some pages link to other websites, for example to Google's advertising policy pages. Once you follow such
+            a link, the privacy practices of that site apply. The tool itself embeds no third-party content, no
+            trackers and no social widgets.
+          </p>
+
+          <h2>9. Children</h2>
+          <p>
+            This site is a general-audience utility and is not directed at children. We do not knowingly collect
+            personal information from anyone, of any age.
+          </p>
+
+          <h2>10. Your rights</h2>
+          <p>
+            Depending on where you live, you may have rights to access, correct, delete or restrict the processing
+            of your personal data, and to object to certain processing or to object to direct marketing. Since this
+            site does not collect personal data about you, most of these rights concern the advertising cookies that
+            Google stores in your browser and that you can control yourself through the links in section 5 and through
+            the consent banner.
+          </p>
+          <p>
+            We do not claim that this page certifies compliance with every privacy law that may apply to you; laws
+            differ by jurisdiction and by deployment, and the site operator is responsible for the configuration of
+            their own deployment. If you have a specific request, contact
+            <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> and we will answer it as concretely as we can.
+          </p>
+
+          <h2>11. Changes to this policy</h2>
+          <p>
+            This policy may be updated when the site changes — for example when advertising is enabled or disabled,
+            or when the hosting provider changes. The "last updated" date at the top of this page always reflects
+            the current version.
+          </p>
+        </article>
+
+        <div class="ad-slot" data-ad-placement="belowTester" aria-label="Advertisement"></div>
+      </div>
+
+      <aside class="layout__aside" aria-label="Sidebar">
+        <div class="ad-slot ad-slot--sidebar" data-ad-placement="sidebar" aria-label="Advertisement"></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- @include footer -->
+
+<script src="{{BASE}}assets/js/site-config.js" defer></script>
+<script src="{{BASE}}assets/js/consent.js" defer></script>
+<script src="{{BASE}}assets/js/adsense.js" defer></script>
+<script src="{{BASE}}assets/js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "keycheck",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KEYCHECK — free online keyboard & mouse tester. Static site, zero runtime dependencies.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "test": "node --test tests/e2e.test.mjs",
+    "test:e2e": "node --test tests/e2e.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
