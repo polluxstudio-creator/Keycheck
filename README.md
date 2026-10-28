@@ -189,6 +189,7 @@ Reglas de funcionamiento:
 - **Mientras `publisherId` o un `slots.*` estén vacíos, no se renderiza nada**: no se carga el
   script de Google, no se generan `<ins>` y **no queda ningún hueco vacío** en la página
   (`.ad-slot:empty { display: none }`).
+- El `ads.txt` se **genera solo** a partir del `publisherId`: no hay que editarlo a mano.
 - El interruptor `enabled: false` desactiva los anuncios aunque los IDs estén puestos.
 - Las ubicaciones se activan una a una con `enabledPlacements`: si no quieres el bloque lateral,
   quítalo de la lista y la columna lateral se recolapsa sola.
@@ -234,8 +235,8 @@ baja (728×90), baja el valor a ~115 y seguirá sin haber desplazamiento.
    - `betweenSections` → bloque horizontal entre secciones informativas.
 3. **Tu dominio final** (`site.url`) para canonical, sitemap y `ads.txt`.
 4. **Email de contacto** (`site.contactEmail`).
-5. Opcional: si quieres autoanunciios, pon `autoAds: true` (requiere el snippet de autoanunciios en
-   la `<head>`; el código actual solo gestiona unidades de display, así que avísame y lo añado).
+5. Opcional: **autoanuncios** → `autoAds: true`. En ese modo Google coloca los anuncios por su
+   cuenta y no se encolan las unidades manuales (para no servir anuncios duplicados).
 
 Con esos cinco datos, relleno `config/site.json`, recompilo y la web queda lista.
 
