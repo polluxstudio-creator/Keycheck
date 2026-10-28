@@ -1,4 +1,4 @@
 # KEYCHECK ads.txt
 # This file is verified by Google AdSense. Replace the placeholder below with the
 # exact line shown in your AdSense dashboard (Account > Ads.txt).
-# TODO: paste the line from your AdSense > Ads.txt overview here (it starts with "google.com").
+google.com, pub-6072260383832511, DIRECT, f08c47fec0942fa0

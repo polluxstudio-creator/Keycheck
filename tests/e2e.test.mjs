@@ -642,21 +642,41 @@ describe('pages, SEO and accessibility', () => {
     assert.ok(locCount >= 7, `the sitemap must list every page (found ${locCount})`);
     await c2.close();
 
+    const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
+    const pub = cfg.adsense.publisherId;
     const { page: p3, context: c3 } = await open(`${base}/ads.txt`);
     const ads = await p3.textContent('body');
     const activeLine = ads
       .split('\n')
       .map((l) => l.trim())
       .filter((l) => l && !l.startsWith('#'));
-    assert.deepEqual(activeLine, [], 'no publisher line may be active before AdSense is configured');
+    if (pub) {
+      const expected = `google.com, pub-${pub.replace(/^ca-pub-/, '')}, DIRECT, f08c47fec0942fa0`;
+      assert.deepEqual(activeLine, [expected], 'ads.txt must publish the line of the configured publisher');
+    } else {
+      assert.deepEqual(activeLine, [], 'no publisher line may be active before AdSense is configured');
+    }
     await c3.close();
   });
 
-  test('no page contains an invented publisher id', async () => {
+  test('the only publisher id in the markup is the configured one', async () => {
+    const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
+    const configured = cfg.adsense.publisherId;
     const { page, context } = await open(`${base}/index.html`);
     const html = await page.content();
-    const ids = html.match(/ca-pub-\d+/g) || [];
-    assert.equal(ids.length, 0, 'no publisher id may be hard-coded in the markup');
+    const ids = [...new Set(html.match(/ca-pub-\d+/g) || [])];
+    const expected = configured ? [configured] : [];
+    assert.deepEqual(ids, expected, 'the markup may only reference the configured publisher id');
+    if (configured) {
+      const meta = await page.getAttribute('meta[name="google-adsense-platform-account"]', 'content');
+      assert.equal(meta, configured, 'the verification meta tag must carry the publisher id');
+      // the verification tag must not load any advertising script
+      const scripts = await page.$$eval('script[src]', (els) => els.map((e) => e.src));
+      assert.ok(
+        !scripts.some((s) => s.includes('googlesyndication')),
+        'the verification tag must not load the ads script (consent comes first)'
+      );
+    }
     await context.close();
   });
 

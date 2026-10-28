@@ -18,7 +18,7 @@
   },
   "adsense": {
     "enabled": false,
-    "publisherId": "",
+    "publisherId": "ca-pub-6072260383832511",
     "autoAds": false,
     "enabledPlacements": [
       "header",

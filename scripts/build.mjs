@@ -107,6 +107,11 @@ function applyTokens(content, pagePath) {
     YEAR: String(new Date().getFullYear()),
     PAGE_TITLE: '',
     PAGE_DESCRIPTION: site.description,
+    // Etiqueta de verificacion de propiedad que pide AdSense. No carga ningun
+    // script: solo declara la cuenta en el <head> de cada pagina.
+    ADSENSE_META: config.adsense.publisherId
+      ? `<meta name="google-adsense-platform-account" content="${config.adsense.publisherId}">`
+      : '',
   };
 
   return content.replace(/\{\{([A-Z0-9_]+)\}\}/g, (full, key) => {
