@@ -100,6 +100,15 @@
       return;
     }
 
+    // When Google Funding Choices is active it manages the consent itself:
+    // our own banner stays hidden and the ad script loads normally.
+    if (cfg.useGoogleCmp) {
+      current = 'granted';
+      hide();
+      onDecision('granted');
+      return;
+    }
+
     // Nothing to consent to when advertising is switched off.
     if (cfg.enabled === false || opts.suppressBanner) {
       current = 'granted';

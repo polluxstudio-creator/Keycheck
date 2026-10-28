@@ -14,7 +14,9 @@
     "enabled": true,
     "requireConsentBeforeAds": true,
     "storageKey": "keycheck.consent.v1",
-    "revisitDays": 180
+    "revisitDays": 180,
+    "useGoogleCmp": false,
+    "useGoogleCmpNote": "Poner a true cuando se active Google Funding Choices en la consola de AdSense: el CMP oficial de Google gestiona el consentimiento y este proyecto deja de mostrar su banner."
   },
   "adsense": {
     "enabled": false,
