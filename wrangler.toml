@@ -13,10 +13,10 @@ compatibility_date = "2025-01-01"
 # Carpeta que genera `npm run build`.
 directory = "./dist"
 
-# "none" = las URLs se sirven tal cual: /guides/faq.html NO se reescribe a
-# /guides/faq. Sin esto Cloudflare devuelve un 307 en cada pagina interna y el
-# canonical que declara el sitio apuntaria a una URL que redirige.
-html_handling = "none"
+# "auto-trailing-slash" sirve / -> index.html y /guides/faq -> guides/faq.html.
+# El sitio declara esas URLs (sin .html) en el canonical y el sitemap, de modo
+# que no hay redirecciones intermedias.
+html_handling = "auto-trailing-slash"
 
 # Las 404 usan la pagina 404.html del propio sitio en lugar de la de Cloudflare.
 not_found_handling = "404-page"

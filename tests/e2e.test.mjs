@@ -581,13 +581,13 @@ describe('advertising', () => {
 /* ================================================================== */
 describe('pages, SEO and accessibility', () => {
   const pages = [
-    ['/index.html', 'Free Online Keyboard & Mouse Tester'],
-    ['/guides/diagnostico.html', 'Keyboard & Mouse Diagnostics Guide'],
-    ['/guides/faq.html', 'Frequently Asked Questions'],
-    ['/about.html', 'About'],
-    ['/contact.html', 'Contact'],
-    ['/privacy.html', 'Privacy Policy'],
-    ['/terms.html', 'Terms of Use']
+    ['/', 'Free Online Keyboard & Mouse Tester'],
+    ['/guides/diagnostico', 'Keyboard & Mouse Diagnostics Guide'],
+    ['/guides/faq', 'Frequently Asked Questions'],
+    ['/about', 'About'],
+    ['/contact', 'Contact'],
+    ['/privacy', 'Privacy Policy'],
+    ['/terms', 'Terms of Use']
   ];
 
   for (const [pathname, expected] of pages) {
@@ -602,6 +602,11 @@ describe('pages, SEO and accessibility', () => {
 
       const canonical = await page.getAttribute('link[rel="canonical"]', 'href');
       assert.ok(canonical && canonical.startsWith('http'), 'the canonical URL must be absolute');
+      assert.ok(!canonical.endsWith('.html'), 'the canonical must not carry the .html extension');
+      assert.ok(
+        canonical.replace(/\/$/, '') === 'https://checkyourkeyboard.com' + pathname.replace(/\/$/, ''),
+        `the canonical must match the real URL (${canonical} vs ${pathname})`
+      );
       assert.equal(await page.getAttribute('meta[name="description"]', 'content').then((c) => c.length > 60), true);
       await context.close();
       assert.deepEqual(errors, [], `no console errors on ${pathname}`);
@@ -611,10 +616,14 @@ describe('pages, SEO and accessibility', () => {
   test('the guides are linked from the main page', async () => {
     const { page, context } = await open(`${base}/index.html`);
     const hrefs = await page.$$eval('a[href]', (els) => els.map((e) => e.getAttribute('href')));
-    assert.ok(hrefs.some((h) => h.includes('guides/diagnostico.html')));
-    assert.ok(hrefs.some((h) => h.includes('guides/faq.html')));
-    assert.ok(hrefs.some((h) => h.includes('privacy.html')));
-    assert.ok(hrefs.some((h) => h.includes('terms.html')));
+    assert.ok(hrefs.some((h) => h.includes('guides/diagnostico')));
+    assert.ok(hrefs.some((h) => h.includes('guides/faq')));
+    assert.ok(hrefs.some((h) => h.includes('privacy')));
+    assert.ok(hrefs.some((h) => h.includes('terms')));
+    assert.ok(
+      hrefs.every((h) => !h.endsWith('.html')),
+      'los enlaces internos no deben llevar .html (las URLs se sirven sin extension)'
+    );
     await context.close();
   });
 

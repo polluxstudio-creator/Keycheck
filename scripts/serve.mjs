@@ -40,6 +40,27 @@ const server = createServer(async (req, res) => {
       filePath = path.join(filePath, 'index.html');
       s = await stat(filePath).catch(() => null);
     }
+
+    // Emula el comportamiento de Cloudflare Workers (html_handling =
+    // "auto-trailing-slash") para que el desarrollo local sea igual que
+    // produccion: / -> index.html, /guides/faq -> guides/faq.html y
+    // /guides/faq.html -> 307 hacia /guides/faq.
+    if (s && filePath.endsWith('.html')) {
+      const clean = filePath.slice(0, -5);
+      const cleanUrl = url.replace(/\.html$/, '') || '/';
+      if (await stat(clean).catch(() => null)) {
+        res.writeHead(307, { location: cleanUrl });
+        res.end();
+        return;
+      }
+    }
+    if (!s && url !== '/' && !url.endsWith('.html')) {
+      const withHtml = filePath + '.html';
+      if (await stat(withHtml).catch(() => null)) {
+        filePath = withHtml;
+        s = { isDirectory: () => false };
+      }
+    }
     if (!s) {
       const notFound = path.join(DIST, '404.html');
       const body = await readFile(notFound).catch(() => Buffer.from('404 — Not found'));

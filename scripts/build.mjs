@@ -84,7 +84,10 @@ async function resolvePartials(content, depth = 0) {
 function applyTokens(content, pagePath) {
   const site = config.site;
   const base = '../'.repeat(pagePath.split('/').length - 1);
-  const canonicalPath = pagePath === 'index.html' ? '/' : `/${pagePath}`;
+  // Las URLs se sirven sin extension: /guides/faq (Cloudflare sirve el
+  // fichero guides/faq.html). Asi el canonical coincide con la URL real.
+  const cleanPath = pagePath.replace(/\.html$/, '');
+  const canonicalPath = pagePath === 'index.html' ? '/' : `/${cleanPath}`;
   const canonical = `${site.url.replace(/\/+$/, '')}${canonicalPath}`;
   const ogImage = `${site.url.replace(/\/+$/, '')}/assets/img/og-image.png`;
 
@@ -100,6 +103,7 @@ function applyTokens(content, pagePath) {
     CANONICAL: canonical,
     OG_IMAGE: ogImage,
     BASE: base,
+    ROOT: base === '' ? '/' : base,
     YEAR: String(new Date().getFullYear()),
     PAGE_TITLE: '',
     PAGE_DESCRIPTION: site.description,
@@ -216,7 +220,8 @@ Sitemap: ${baseUrl}/sitemap.xml
 const today = new Date().toISOString().slice(0, 10);
 const urls = config.seo.pages
   .map((p) => {
-    const loc = p.path === 'index.html' ? `${baseUrl}/` : `${baseUrl}/${p.path}`;
+    const cleanPath = p.path.replace(/\.html$/, '');
+    const loc = p.path === 'index.html' ? `${baseUrl}/` : `${baseUrl}/${cleanPath}`;
     return `  <url>
     <loc>${loc}</loc>
     <lastmod>${today}</lastmod>
