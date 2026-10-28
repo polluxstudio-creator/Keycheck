@@ -1,0 +1,22 @@
+# Configuracion de Cloudflare Workers para KEYCHECK.
+#
+# El sitio se sirve como "static assets" sobre el Worker "keycheck".
+# Cloudflare usa este fichero durante el despliegue (Workers Builds).
+#
+# name: el nombre del Worker en tu cuenta de Cloudflare.
+name = "keycheck"
+
+# Fecha de compatibilidad: usa la de hoy en tu panel si es mas reciente.
+compatibility_date = "2025-01-01"
+
+[assets]
+# Carpeta que genera `npm run build`.
+directory = "./dist"
+
+# "none" = las URLs se sirven tal cual: /guides/faq.html NO se reescribe a
+# /guides/faq. Sin esto Cloudflare devuelve un 307 en cada pagina interna y el
+# canonical que declara el sitio apuntaria a una URL que redirige.
+html_handling = "none"
+
+# Las 404 usan la pagina 404.html del propio sitio en lugar de la de Cloudflare.
+not_found_handling = "404-page"
