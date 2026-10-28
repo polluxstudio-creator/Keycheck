@@ -109,8 +109,15 @@ function applyTokens(content, pagePath) {
     PAGE_DESCRIPTION: site.description,
     // Etiqueta de verificacion de propiedad que pide AdSense. No carga ningun
     // script: solo declara la cuenta en el <head> de cada pagina.
+    // Google ofrece varias etiquetas para verificar la propiedad. Se ponen
+    // todas: "google-adsense-account" es la que busca el verificador de
+    // AdSense y "google-adsense-platform-account" la que usa la plataforma
+    // para los autoanuncios. Ninguna carga scripts ni cookies.
     ADSENSE_META: config.adsense.publisherId
-      ? `<meta name="google-adsense-platform-account" content="${config.adsense.publisherId}">`
+      ? [
+          `<meta name="google-adsense-account" content="${config.adsense.publisherId}">`,
+          `<meta name="google-adsense-platform-account" content="${config.adsense.publisherId}">`
+        ].join('\n')
       : '',
   };
 

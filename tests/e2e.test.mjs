@@ -668,8 +668,10 @@ describe('pages, SEO and accessibility', () => {
     const expected = configured ? [configured] : [];
     assert.deepEqual(ids, expected, 'the markup may only reference the configured publisher id');
     if (configured) {
-      const meta = await page.getAttribute('meta[name="google-adsense-platform-account"]', 'content');
+      const meta = await page.getAttribute('meta[name="google-adsense-account"]', 'content');
       assert.equal(meta, configured, 'the verification meta tag must carry the publisher id');
+      const meta2 = await page.getAttribute('meta[name="google-adsense-platform-account"]', 'content');
+      assert.equal(meta2, configured, 'the platform verification tag must carry the publisher id');
       // the verification tag must not load any advertising script
       const scripts = await page.$$eval('script[src]', (els) => els.map((e) => e.src));
       assert.ok(
