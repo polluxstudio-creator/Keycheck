@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keyboard &amp; Mouse Diagnostics Guide — How to Find a Fault | KEYCHECK</title>
+<meta name="description" content="Step-by-step guide to diagnosing a keyboard or mouse: dead keys, double-click problems, erratic scrolling, wireless drops and dead buttons.">
+<link rel="canonical" href="https://checkyourkeyboard.com/guides/diagnostico.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0d0f12">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="KEYCHECK">
+<meta property="og:title" content="Keyboard &amp; Mouse Diagnostics Guide | KEYCHECK">
+<meta property="og:description" content="How to isolate a keyboard or mouse fault step by step, and what a browser tester can and cannot tell you.">
+<meta property="og:url" content="https://checkyourkeyboard.com/guides/diagnostico.html">
+<meta property="og:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Keyboard &amp; Mouse Diagnostics Guide | KEYCHECK">
+<meta name="twitter:description" content="Step-by-step diagnosis for keys that do not respond, double-click problems and erratic scrolling.">
+<meta name="twitter:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="../index.html">
+      <span class="brand__mark" aria-hidden="true">KC</span>
+      <span>KEYCHECK</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../index.html">Tester</a>
+      <a href="../guides/diagnostico.html">Diagnostics</a>
+      <a href="../guides/faq.html">FAQ</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero__eyebrow"><span aria-hidden="true">●</span> Guide</p>
+      <h1>Keyboard &amp; mouse diagnostics guide</h1>
+      <p class="lead">
+        A browser tester can confirm that the operating system is delivering your key presses and mouse clicks.
+        It cannot tell you whether a switch is worn out or a cable is intermittent. This guide explains how to
+        use the tester as the first step of a real diagnosis, and what to do when it points at a problem.
+      </p>
+    </section>
+
+    <div class="ad-slot ad-slot--reserved" data-ad-placement="header" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+    <div class="layout">
+      <div class="layout__main">
+        <article class="prose">
+          <h2 id="how-to-check-one-key">How to check whether a single key responds</h2>
+          <p>
+            Start with the most specific test instead of typing a long text. Open the
+            <a href="../index.html#keyboard">Keyboard Test</a> tab, click once on the page so it has focus,
+            and then press only the key you suspect. A working key lights up green immediately and adds one to
+            both the <strong>total presses</strong> and the <strong>unique keys</strong> counters.
+          </p>
+          <p>
+            If the key lights up but nothing happens in your application, the fault is almost certainly not
+            hardware: it is an application-level remapping, a language layout that moves the character to another
+            key, or a stuck modifier key. If the key never lights up, keep reading below.
+          </p>
+
+          <h2 id="key-not-detected">Why a key is not detected in the browser</h2>
+          <p>When a key stays dark, the event never reached the page. These are the usual reasons, in the order they are worth checking:</p>
+          <ul>
+            <li>
+              <strong>The operating system reserves the key.</strong> System shortcuts (Windows key, Ctrl+Alt+Delete,
+              some Fn combinations) are handled before any application sees them. No website can detect them, and
+              that is by design.
+            </li>
+            <li>
+              <strong>Another program grabs it.</strong> Hotkey tools, macro utilities, clipboard managers and RGB
+              drivers install global hooks. While such a tool owns the key, the browser only sees the remaining ones.
+              Close those utilities and test again.
+            </li>
+            <li>
+              <strong>A modifier is logically stuck.</strong> A held <kbd>Ctrl</kbd>, <kbd>Alt</kbd> or
+              <kbd>Shift</kbd> changes what the system delivers, and some combinations are swallowed. KEYCHECK
+              shows the modifiers it currently believes are held, right under the keyboard, so you can check whether
+              a stuck modifier is the cause.
+            </li>
+            <li>
+              <strong>The keyboard is partially disconnected.</strong> Wireless keyboards drop out of range and some
+              USB hubs power down individual ports. A key that works when you wiggle the cable or move the receiver
+              closer points to the connection rather than the key.
+            </li>
+            <li>
+              <strong>The layout is not what you think.</strong> KEYCHECK identifies keys by physical position
+              (<code>KeyboardEvent.code</code>), so it always highlights the same physical key. If the character
+              printed on the key differs from the character you get, you are on a different keyboard layout — change
+              the layout in the operating system, not in the tester.
+            </li>
+          </ul>
+
+          <h2 id="dead-keys">Dealing with several dead keys</h2>
+          <p>
+            One dead key is usually a mapping or a shortcut. A cluster of dead keys — a whole row, a whole column,
+            or everything on the left half of the keyboard — points to something physical: a membrane contact that
+            has lost contact, a spilled drink, or a keyboard that is partially detached from its case.
+          </p>
+          <p>
+            Open the tester and press the keys in a grid pattern, skipping the suspect area. If the pattern of
+            unresponsive keys is geometric, the problem is in the matrix and no software will fix it. Clean the
+            keyboard, reseat the ribbon cable, and test on another USB port before considering a replacement.
+          </p>
+
+          <h2 id="mouse-buttons">How to test the mouse buttons</h2>
+          <p>
+            Switch to the <a href="../index.html#mouse">Mouse Test</a> tab and move the pointer into the
+            test area. Each button lights up as you press it, and the counters on the right of the box tell you how
+            many times each button was used.
+          </p>
+          <ul>
+            <li><strong>Left button</strong> — the primary click. If it does not register, first rule out the application: many programs bind their own shortcuts.</li>
+            <li><strong>Middle button</strong> — the wheel click. It opens links in a new tab, pans a canvas, or starts autoscroll depending on the software.</li>
+            <li><strong>Right button</strong> — the context menu. Inside the test area the context menu is suppressed so the click can be counted; everywhere else on the page it behaves normally.</li>
+            <li><strong>Side buttons (4 and 5)</strong> — available on many gaming and productivity mice. They only light up if your mouse actually has them and the operating system forwards them.</li>
+          </ul>
+          <p>
+            A mouse that works on one USB port but not another is a driver or port problem, not a switch problem.
+            A mouse that only loses the side buttons after a sleep/wake cycle is a known behaviour of some
+            wireless receivers and is fixed by re-pairing the device.
+          </p>
+
+          <h2 id="double-click">How to detect a double-click problem</h2>
+          <p>
+            A worn mouse switch often produces two separate single clicks instead of one double-click. The symptom
+            is classic: you double-click a link and it opens one tab, or the file does not open at all.
+          </p>
+          <p>KEYCHECK measures the time between two consecutive clicks on the same button and displays it in milliseconds:</p>
+          <ul>
+            <li>Two clicks <strong>well under 500&nbsp;ms</strong> are reported as a double-click — your hardware and the system agree.</li>
+            <li>Two clicks <strong>near 500&nbsp;ms</strong> are reported as a slow double-click. The click may be rejected by applications that use a stricter threshold.</li>
+            <li>Two clicks that are <strong>never</strong> grouped mean the system does not receive a second click at all — a switch, connection or driver problem.</li>
+          </ul>
+          <p>
+            The double-click threshold itself is configurable in the operating system (Windows: Settings, Bluetooth
+            &amp; devices, Mouse, Additional mouse settings, Double-click speed; macOS: System Settings, Mouse, Click
+            speed). If a slow double-click works when you lower the threshold, your mouse is fine and the setting was
+            simply too strict for your hand speed.
+          </p>
+
+          <h2 id="scroll-wheel">When the scroll wheel behaves strangely</h2>
+          <p>
+            Modern optical scroll wheels are high-resolution: they report a stream of small <code>wheel</code>
+            events instead of one event per notch. The scroll distance is therefore controlled by the operating
+            system and the application, not by the mouse. A wheel that scrolls too fast usually needs the
+            "lines per notch" setting adjusted, while a wheel that skips in both directions points to dust in the
+            encoder or a failing optical sensor — clean it with compressed air and avoid blowing dust deeper into
+            the mechanism.
+          </p>
+
+          <h2 id="pointer-issues">Pointer that drifts, jumps or moves on its own</h2>
+          <p>
+            Drift is a sensor problem: a dirty or scratched surface, a low battery, or a mouse that is not
+            supported by the current driver. Movement that happens without any physical input is usually caused by
+            an unstable surface, a vibrating desk, or interference with another wireless device on the same
+            frequency band.
+          </p>
+          <p>
+            The pointer travel counter in the mouse test is useful here: move the mouse a known distance and check
+            whether the pixels reported by the system match what you expect. A large mismatch suggests that the sensor
+            resolution has been changed in the driver settings.
+          </p>
+
+          <h2 id="wireless">Wireless keyboards and mice that drop out</h2>
+          <ol>
+            <li>Replace or recharge the battery. Low battery is the most common cause of erratic behaviour.</li>
+            <li>Move the receiver closer and away from USB hubs, which can starve devices of power.</li>
+            <li>Re-pair the device instead of only re-plugging the receiver — the pairing record is what breaks.</li>
+            <li>Check for interference: 2.4&nbsp;GHz receivers sit close to Wi-Fi antennas and USB 3 ports.</li>
+            <li>Update or reinstall the manufacturer driver; many odd behaviours are driver bugs.</li>
+          </ol>
+
+          <h2 id="what-the-tester-cannot-do">What a browser tester can never tell you</h2>
+          <ul>
+            <li>Whether a key feels physically the same as it used to — the switch could be on its last legs while the event still arrives.</li>
+            <li>Whether the mouse sensor is accurate at high movement speeds, which matters for games but not for the event stream.</li>
+            <li>Whether the keyboard firmware has a broken matrix, when the operating system still translates the key into something else.</li>
+            <li>Whether a USB port or a cable is about to fail. The browser only sees the final event.</li>
+          </ul>
+          <div class="notice notice--green">
+            <strong>Rule of thumb:</strong> if the browser tester shows the key or the button working, the path
+            between the switch and the operating system is fine. The remaining suspects are the application, the
+            driver, the operating system configuration and the physical hardware itself.
+          </div>
+        </article>
+
+        <div class="ad-slot ad-slot--reserved" data-ad-placement="belowTester" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+        <section class="section">
+          <div class="card">
+            <h2 class="card__title">Ready to test your hardware?</h2>
+            <p class="card__hint">The tester is free and needs no installation.</p>
+            <p><a class="btn btn--primary" href="../index.html">Open the tester</a></p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="layout__aside" aria-label="Sidebar">
+        <div class="ad-slot ad-slot--sidebar ad-slot--reserved" data-ad-placement="sidebar" aria-label="Advertisement" style="--ad-reserve:625px"><span class="ad-slot__label">Advertisement</span></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <h2>KEYCHECK</h2>
+        <p>
+          A free online keyboard and mouse tester. Everything runs locally in your browser: the keys you press
+          and the clicks you make are never uploaded or stored.
+        </p>
+      </div>
+      <div>
+        <h2>Guides</h2>
+        <ul>
+          <li><a href="../guides/diagnostico.html">Keyboard &amp; mouse diagnostics</a></li>
+          <li><a href="../guides/faq.html">Frequently asked questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="../terms.html">Terms of Use</a></li>
+          <li>
+            <button type="button" class="linkish" data-consent-settings>Cookie settings</button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="../contact.html">Contact page</a></li>
+          <li><a href="mailto:polluxstudioio@gmail.com">polluxstudioio@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; 2026 KEYCHECK. All rights reserved.</span>
+      <span>Free tool &middot; Advertising is the only monetisation &middot; No data collection</span>
+    </div>
+  </div>
+</footer>
+
+<div class="consent" id="consent-banner" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text" data-open="false">
+  <h2 id="consent-title">Cookies and advertising</h2>
+  <p id="consent-text">
+    KEYCHECK itself stores nothing about you. If advertising is enabled, this site and Google AdSense may use
+    cookies to serve and measure ads. Choose whether to allow advertising cookies.
+    Read the <a href="../privacy.html">Privacy Policy</a>.
+  </p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary btn--sm" data-consent-accept>Accept advertising cookies</button>
+    <button type="button" class="btn btn--sm" data-consent-decline>Decline</button>
+  </div>
+</div>
+
+
+<script src="../assets/js/site-config.js" defer></script>
+<script src="../assets/js/consent.js" defer></script>
+<script src="../assets/js/adsense.js" defer></script>
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>

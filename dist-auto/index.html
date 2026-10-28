@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Online Keyboard &amp; Mouse Tester — Test Every Key | KEYCHECK</title>
+<meta name="description" content="Test every key and mouse button in your browser. Free, private and instant: check key response, unique-key coverage, scroll wheel and double-click.">
+<link rel="canonical" href="https://checkyourkeyboard.com/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0d0f12">
+<meta name="author" content="KEYCHECK">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KEYCHECK">
+<meta property="og:title" content="Free Online Keyboard &amp; Mouse Tester | KEYCHECK">
+<meta property="og:description" content="Check that every key and every mouse button works, straight from your browser. Free, fast and private — nothing you type is uploaded.">
+<meta property="og:url" content="https://checkyourkeyboard.com/">
+<meta property="og:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="KEYCHECK — free online keyboard and mouse tester">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@keycheckapp">
+<meta name="twitter:title" content="Free Online Keyboard &amp; Mouse Tester | KEYCHECK">
+<meta name="twitter:description" content="Check every key and every mouse button in your browser. Free, private and instant.">
+<meta name="twitter:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/css/styles.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "KEYCHECK — Free Online Keyboard & Mouse Tester",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "url": "https://checkyourkeyboard.com/",
+  "description": "Free browser-based keyboard and mouse tester: highlights every physical key, measures key coverage, counts mouse buttons and scroll events and gives an indicative double-click check.",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does the keyboard tester record what I type?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Key events are handled inside your browser and only counters are updated. The characters you type are never sent to a server, never stored and never logged. Reloading the page resets the test."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does a key stay lit after I release it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That usually means the browser never received the key-up event, for example because the window lost focus while the key was held. Click on the page or press Reset test to clear the highlighted keys."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which keys can the browser not detect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The browser only receives key events that the operating system forwards to it. Several system shortcuts, the Windows key on some setups, media keys and the dedicated button on some laptops are reserved by the operating system and never reach the page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the mouse tester replace a real hardware test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It confirms that the operating system delivers the events to the browser. It cannot detect wear in the switches, an intermittent cable, a failing encoder or a battery that is about to die. Use it as a fast first check."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I check a double-click problem?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open the Mouse Test tab and click twice quickly on the same button. KEYCHECK reports the interval between the two clicks, so you can compare it with the double-click speed configured in your operating system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the tool really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. There is no paid tier and no account. When advertising is enabled, this site may show ads from Google AdSense, but the tool itself always stays free and fully functional."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">KC</span>
+      <span>KEYCHECK</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html">Tester</a>
+      <a href="guides/diagnostico.html">Diagnostics</a>
+      <a href="guides/faq.html">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero__eyebrow"><span aria-hidden="true">●</span> Free · No install · No sign-up</p>
+      <h1>Free Online Keyboard &amp; Mouse Tester</h1>
+      <p class="lead">
+        Check that every key of your keyboard and every button of your mouse responds correctly — right in the
+        browser. Press a key and it lights up, click a button and it is counted. Everything is processed locally:
+        nothing you type or click is uploaded, saved or logged.
+      </p>
+      <ul class="hero__meta">
+        <li><span aria-hidden="true">🔒</span> 100% local processing</li>
+        <li><span aria-hidden="true">⚡</span> Instant results</li>
+        <li><span aria-hidden="true">📱</span> Works on desktop and mobile</li>
+        <li><span aria-hidden="true">💸</span> Free forever</li>
+      </ul>
+    </section>
+
+    <!-- Ad placement A — horizontal unit below the header -->
+    <div class="ad-slot ad-slot--reserved" data-ad-placement="header" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+    <div class="layout">
+      <div class="layout__main">
+
+        <!-- ============================ TOOL ============================ -->
+        <section aria-labelledby="tool-heading">
+          <h2 id="tool-heading" class="visually-hidden">Interactive keyboard and mouse tester</h2>
+
+          <div class="tabs" role="tablist" aria-label="Choose a test">
+            <button class="tab" type="button" role="tab" id="tab-keyboard" aria-controls="panel-keyboard" aria-selected="true" tabindex="0" data-tab="keyboard">
+              <span class="tab__icon" aria-hidden="true">⌨</span>Keyboard Test
+            </button>
+            <button class="tab" type="button" role="tab" id="tab-mouse" aria-controls="panel-mouse" aria-selected="false" tabindex="-1" data-tab="mouse">
+              <span class="tab__icon" aria-hidden="true">🖱</span>Mouse Test
+            </button>
+          </div>
+
+          <!-- ---------------- keyboard panel ---------------- -->
+          <div id="panel-keyboard" role="tabpanel" aria-labelledby="tab-keyboard">
+            <div class="card">
+              <div class="card__head">
+                <div>
+                  <h3 class="card__title">Keyboard test</h3>
+                  <p class="card__hint">Click anywhere on the page and type. Each physical key you press lights up in green.</p>
+                </div>
+                <button class="btn btn--sm" type="button" id="kb-reset">Reset test</button>
+              </div>
+
+              <noscript>
+                <div class="notice notice--warn">
+                  This tester needs JavaScript, because the detection happens through the browser key events.
+                  Please enable JavaScript to use it.
+                </div>
+              </noscript>
+
+              <div class="kb-shell">
+                <div id="kb-root"></div>
+              </div>
+              <p class="scroll-hint"><span aria-hidden="true">↔</span> Swipe the keyboard sideways to see the whole layout</p>
+
+              <div class="kb-legend">
+                <span class="kb-legend__item"><span class="swatch swatch--green" aria-hidden="true"></span> Key pressed</span>
+                <span class="kb-legend__item"><span class="swatch swatch--dot" aria-hidden="true"></span> Key already tested</span>
+                <span class="kb-legend__item">Modifiers held:</span>
+                <span class="kb-legend__item" id="kb-modifiers"><span class="badge">none held</span></span>
+              </div>
+              <p class="inline-status" id="kb-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="card">
+              <div class="card__head">
+                <h3 class="card__title">Keyboard statistics</h3>
+              </div>
+              <div class="stats" aria-live="polite">
+                <div class="stat">
+                  <span class="stat__label">Total presses</span>
+                  <span class="stat__value stat__value--green" id="kb-presses">0</span>
+                  <span class="stat__sub">every physical press</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Unique keys</span>
+                  <span class="stat__value" id="kb-unique">0</span>
+                  <span class="stat__sub">of <span id="kb-total">104</span> keys in the layout</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Coverage</span>
+                  <span class="stat__value stat__value--blue" id="kb-coverage">0%</span>
+                  <div class="meter"><div class="meter__fill" id="kb-coverage-fill"></div></div>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Last key</span>
+                  <span class="stat__value" id="kb-last-key" style="font-size:1.15rem"><b>—</b></span>
+                  <span class="stat__sub">most recent detection</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card__head">
+                <h3 class="card__title">Key history</h3>
+                <span class="card__hint">Newest first — × shows how many times that key was pressed.</span>
+              </div>
+              <div class="history" id="kb-history"><p class="history__empty">Press any key to start building the timeline…</p></div>
+            </div>
+
+            <div class="card">
+              <div class="card__head">
+                <h3 class="card__title">Keys tested so far</h3>
+              </div>
+              <div class="tested-list" id="kb-tested-list"><p class="history__empty">No keys tested yet.</p></div>
+            </div>
+          </div>
+
+          <!-- ---------------- mouse panel ---------------- -->
+          <div id="panel-mouse" role="tabpanel" aria-labelledby="tab-mouse" hidden>
+            <div class="card">
+              <div class="card__head">
+                <div>
+                  <h3 class="card__title">Mouse test</h3>
+                  <p class="card__hint">Move the pointer inside the box and press every button, then scroll the wheel.</p>
+                </div>
+                <div class="btn-row">
+                  <button class="btn btn--sm" type="button" id="ms-clear-trail">Clear trail</button>
+                  <button class="btn btn--sm" type="button" id="ms-reset">Reset test</button>
+                </div>
+              </div>
+
+              <div class="mouse-area" id="mouse-area" role="region" aria-label="Mouse test area" tabindex="0">
+                <canvas class="mouse-area__canvas" id="mouse-canvas"></canvas>
+                <div class="mouse-area__overlay">
+                  <p>
+                    <strong>Move the pointer here and click every button.</strong><br>
+                    The right button is captured inside this box only, so you can test it without opening a
+                    context menu. The wheel is captured too, so the page does not jump while you test it. The
+                    trail shows the pointer path and the readout shows the live coordinates.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mouse-buttons">
+                <div class="mouse-btn" id="ms-btn-left" data-active="false">
+                  <span class="mouse-btn__label">Left button <span class="mouse-btn__dot" aria-hidden="true"></span></span>
+                  <span class="mouse-btn__count" id="ms-left">0</span>
+                  <span class="mouse-btn__hint">Primary click</span>
+                </div>
+                <div class="mouse-btn" id="ms-btn-middle" data-active="false">
+                  <span class="mouse-btn__label">Middle button <span class="mouse-btn__dot" aria-hidden="true"></span></span>
+                  <span class="mouse-btn__count" id="ms-middle">0</span>
+                  <span class="mouse-btn__hint">Wheel click</span>
+                </div>
+                <div class="mouse-btn" id="ms-btn-right" data-active="false">
+                  <span class="mouse-btn__label">Right button <span class="mouse-btn__dot" aria-hidden="true"></span></span>
+                  <span class="mouse-btn__count" id="ms-right">0</span>
+                  <span class="mouse-btn__hint">Secondary click</span>
+                </div>
+                <div class="mouse-btn" id="ms-btn-back" data-active="false">
+                  <span class="mouse-btn__label">Side button 4 <span class="mouse-btn__dot" aria-hidden="true"></span></span>
+                  <span class="mouse-btn__count" id="ms-back">0</span>
+                  <span class="mouse-btn__hint">Back</span>
+                </div>
+                <div class="mouse-btn" id="ms-btn-forward" data-active="false">
+                  <span class="mouse-btn__label">Side button 5 <span class="mouse-btn__dot" aria-hidden="true"></span></span>
+                  <span class="mouse-btn__count" id="ms-forward">0</span>
+                  <span class="mouse-btn__hint">Forward</span>
+                </div>
+              </div>
+
+              <div class="card__head" style="margin-top:1rem; margin-bottom:.5rem">
+                <h3 class="card__title">Mouse statistics</h3>
+                <span class="dbl" id="ms-dbl" data-state="" aria-live="polite"><span class="dbl__dot" aria-hidden="true"></span><span class="dbl__text">No double-click detected yet</span></span>
+              </div>
+              <div class="stats" aria-live="polite">
+                <div class="stat">
+                  <span class="stat__label">Total clicks</span>
+                  <span class="stat__value stat__value--green" id="ms-total">0</span>
+                  <span class="stat__sub">all buttons combined</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Scroll events</span>
+                  <span class="stat__value stat__value--blue" id="ms-wheel-events">0</span>
+                  <span class="stat__sub">wheel notches reported</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Scroll distance</span>
+                  <span class="stat__value" id="ms-scroll-delta">0</span>
+                  <span class="stat__sub">cumulative delta</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Double-clicks</span>
+                  <span class="stat__value stat__value--violet" id="ms-double-clicks">0</span>
+                  <span class="stat__sub">indicative detection</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Pointer travel</span>
+                  <span class="stat__value" id="ms-distance">0</span>
+                  <span class="stat__sub">pixels inside the box</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__label">Position</span>
+                  <span class="stat__value" id="ms-pos" style="font-size:1.05rem">0, 0</span>
+                  <span class="stat__sub">last wheel: <span id="ms-wheel-dir">—</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Ad placement C — below the tester -->
+        <div class="ad-slot ad-slot--reserved" data-ad-placement="belowTester" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+        <!-- ========================= INSTRUCTIONS ========================= -->
+        <section class="section" id="how-to-use" aria-labelledby="how-to-use-title">
+          <div class="section__head">
+            <h2 id="how-to-use-title">How to use the keyboard and mouse tester</h2>
+            <p>Both tests run in the page you are reading, without installation and without permissions.</p>
+          </div>
+          <div class="card">
+            <ol class="step-list">
+              <li><strong>Open the tester and pick a tab.</strong> Start with <em>Keyboard Test</em> for keys or <em>Mouse Test</em> for buttons, wheel and pointer.</li>
+              <li><strong>Click once anywhere in the page.</strong> That gives the page keyboard focus, which is required before the browser reports key presses.</li>
+              <li><strong>Press the keys you want to check.</strong> Every key you press lights up in green and the counters update instantly. Press the <kbd>Reset test</kbd> button to start a clean run.</li>
+              <li><strong>Watch the coverage bar.</strong> The unique-key counter grows only when you press a key for the first time, so repeatedly hammering the same key does not fake a 100% coverage.</li>
+              <li><strong>For the mouse, test inside the box.</strong> Move the pointer inside the test area and press each button, scroll the wheel and click twice in a row to check the double-click behaviour.</li>
+            </ol>
+            <div class="notice" style="margin-top:1rem">
+              <strong>Important limitation:</strong> a browser test can only confirm that the operating system
+              delivers the key and button events to the web page. It cannot detect worn-out switches, an
+              intermittent cable, a failing scroll encoder or a mouse sensor that drifts. Use it as a fast first
+              check, not as a hardware diagnosis.
+            </div>
+          </div>
+        </section>
+
+        <!-- Ad placement D — between informational sections -->
+        <div class="ad-slot ad-slot--reserved" data-ad-placement="betweenSections" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+        <!-- ====================== QUICK TROUBLESHOOTING ================= -->
+        <section class="section" id="troubleshooting" aria-labelledby="troubleshooting-title">
+          <div class="section__head">
+            <h2 id="troubleshooting-title">Quick troubleshooting</h2>
+            <p>The three problems users hit most often, and what they usually mean.</p>
+          </div>
+          <div class="grid-2">
+            <article class="guide-card">
+              <h3>A key does not react at all</h3>
+              <p>
+                If the key never lights up, the browser never received the event. Common causes: another program
+                holds a global shortcut, the key is mapped to a system action, or the keyboard is connected
+                through a Bluetooth link that only forwards some keys.
+              </p>
+              <p><a href="guides/diagnostico.html#key-not-detected">Full diagnosis →</a></p>
+            </article>
+            <article class="guide-card">
+              <h3>Double-click does not open anything</h3>
+              <p>
+                The mouse test measures the interval between two clicks. If the interval is much longer than the
+                double-click speed configured in your operating system, the click will be registered as two single
+                clicks — which is exactly what a worn switch often looks like.
+              </p>
+              <p><a href="guides/diagnostico.html#double-click">Full diagnosis →</a></p>
+            </article>
+            <article class="guide-card">
+              <h3>The scroll wheel scrolls too fast or jumps</h3>
+              <p>
+                High-resolution scroll wheels report many small events instead of one notch per step. That is
+                normal on modern mice and can be tuned in the system settings, not in the browser.
+              </p>
+              <p><a href="guides/diagnostico.html#scroll-wheel">Full diagnosis →</a></p>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============================== FAQ ============================= -->
+        <section class="section" id="faq" aria-labelledby="faq-title">
+          <div class="section__head">
+            <h2 id="faq-title">Frequently asked questions</h2>
+            <p>Short answers to the most common questions. The <a href="guides/faq.html">complete FAQ</a> covers more.</p>
+          </div>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Does the keyboard tester record what I type?</summary>
+              <div class="faq-item__body">
+                <p>
+                  No. Key events are handled inside your browser and only counters are updated. The characters you
+                  type are never sent to a server, never stored and never logged. Reloading the page resets the test.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why does a key stay lit after I release it?</summary>
+              <div class="faq-item__body">
+                <p>
+                  That usually means the browser never received the key-up event, for example because the window
+                  lost focus while the key was held. Click on the page or press <em>Reset test</em> to clear the
+                  highlighted keys.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Which keys can the browser not detect?</summary>
+              <div class="faq-item__body">
+                <p>
+                  The browser only receives key events that the operating system forwards to it. Several system
+                  shortcuts, the Windows key on some setups, media keys and the dedicated button on some laptops are
+                  reserved by the operating system and never reach the page.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Does the mouse tester replace a real hardware test?</summary>
+              <div class="faq-item__body">
+                <p>
+                  No. It confirms that the operating system delivers the events to the browser. It cannot detect wear
+                  in the switches, an intermittent cable, a failing encoder or a battery that is about to die. Use it
+                  as a fast first check.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>How do I check a double-click problem?</summary>
+              <div class="faq-item__body">
+                <p>
+                  Open the <em>Mouse Test</em> tab and click twice quickly on the same button. KEYCHECK reports the
+                  interval between the two clicks, so you can compare it with the double-click speed configured in your
+                  operating system.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Is the tool really free?</summary>
+              <div class="faq-item__body">
+                <p>
+                  Yes. There is no paid tier and no account. When advertising is enabled, this site may show ads from
+                  Google AdSense, but the tool itself always stays free and fully functional.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="more-guides">
+          <h2 id="more-guides" class="visually-hidden">More guides</h2>
+          <div class="grid-2">
+            <article class="guide-card">
+              <h3>Complete diagnostics guide</h3>
+              <p>
+                Step-by-step methods to isolate a keyboard or mouse fault: verifying a single key, checking a
+                wireless connection, understanding double-click problems and fixing the most common input issues.
+              </p>
+              <p><a href="guides/diagnostico.html">Read the diagnostics guide →</a></p>
+            </article>
+            <article class="guide-card">
+              <h3>Everything about this tool</h3>
+              <p>
+                What the tester measures, what it cannot measure, how the privacy rules work and answers to the
+                questions we get asked most often.
+              </p>
+              <p><a href="guides/faq.html">Read the full FAQ →</a></p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- Ad placement B — vertical unit in the sidebar (large screens only) -->
+      <aside class="layout__aside" aria-label="Sidebar">
+        <div class="ad-slot ad-slot--sidebar ad-slot--reserved" data-ad-placement="sidebar" aria-label="Advertisement" style="--ad-reserve:625px"><span class="ad-slot__label">Advertisement</span></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <h2>KEYCHECK</h2>
+        <p>
+          A free online keyboard and mouse tester. Everything runs locally in your browser: the keys you press
+          and the clicks you make are never uploaded or stored.
+        </p>
+      </div>
+      <div>
+        <h2>Guides</h2>
+        <ul>
+          <li><a href="guides/diagnostico.html">Keyboard &amp; mouse diagnostics</a></li>
+          <li><a href="guides/faq.html">Frequently asked questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li>
+            <button type="button" class="linkish" data-consent-settings>Cookie settings</button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="contact.html">Contact page</a></li>
+          <li><a href="mailto:polluxstudioio@gmail.com">polluxstudioio@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; 2026 KEYCHECK. All rights reserved.</span>
+      <span>Free tool &middot; Advertising is the only monetisation &middot; No data collection</span>
+    </div>
+  </div>
+</footer>
+
+<div class="consent" id="consent-banner" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text" data-open="false">
+  <h2 id="consent-title">Cookies and advertising</h2>
+  <p id="consent-text">
+    KEYCHECK itself stores nothing about you. If advertising is enabled, this site and Google AdSense may use
+    cookies to serve and measure ads. Choose whether to allow advertising cookies.
+    Read the <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary btn--sm" data-consent-accept>Accept advertising cookies</button>
+    <button type="button" class="btn btn--sm" data-consent-decline>Decline</button>
+  </div>
+</div>
+
+
+<script src="assets/js/site-config.js" defer></script>
+<script src="assets/js/keyboard.js" defer></script>
+<script src="assets/js/mouse.js" defer></script>
+<script src="assets/js/ui.js" defer></script>
+<script src="assets/js/consent.js" defer></script>
+<script src="assets/js/adsense.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

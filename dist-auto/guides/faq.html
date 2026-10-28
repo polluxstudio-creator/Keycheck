@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frequently Asked Questions — Keyboard &amp; Mouse Tester | KEYCHECK</title>
+<meta name="description" content="Answers to the questions we get most: how the keyboard and mouse tester works, privacy, detection limits, double-click speed, mobile use and ads.">
+<link rel="canonical" href="https://checkyourkeyboard.com/guides/faq.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0d0f12">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="KEYCHECK">
+<meta property="og:title" content="Frequently Asked Questions | KEYCHECK">
+<meta property="og:description" content="Everything about how the keyboard and mouse tester works, what it measures and what it cannot measure.">
+<meta property="og:url" content="https://checkyourkeyboard.com/guides/faq.html">
+<meta property="og:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Frequently Asked Questions | KEYCHECK">
+<meta name="twitter:description" content="Answers to the most common questions about the free keyboard and mouse tester.">
+<meta name="twitter:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
+<link rel="stylesheet" href="../assets/css/styles.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does the tester record what I type?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Every key event is handled by JavaScript inside your browser and only anonymous counters are updated. The characters you type are never transmitted, never stored and never logged. Reloading the page clears the test."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the tool free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The keyboard and mouse tester has no paid tier, no account and no installation. The site may show advertising to cover hosting costs, but the tool itself always stays free and complete."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which keys can the browser never detect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Keys that the operating system reserves for itself: system shortcuts, the Windows key on many configurations, function keys handled by the firmware, and manufacturer hotkeys. They are intercepted before any application, including the browser, can see them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does a key stay highlighted after I release it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually the browser never got the key-up event, which happens when the window loses focus while a key is held. Click on the page, press the Reset test button, or switch windows and back to clear the state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the tester work with all keyboard layouts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Keys are identified by their physical position using the code property of the keyboard event, so QWERTY, AZERTY, QWERTZ and other layouts are all supported. The layout drawn on screen is the standard US ANSI reference."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test an external keyboard on my phone or tablet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Connect a Bluetooth or USB keyboard to the device, open this page in the browser and type. The virtual keyboard shows the physical keys being pressed. The on-screen keyboard of the device itself does not generate real key events, so a phone without an external keyboard cannot test itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are Ctrl, Cmd or Alt combinations not counted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because those combinations are browser and system shortcuts. Counting them would break refresh, copy, paste and window management, so the tester ignores the combination and only counts the modifier key itself. The modifiers that are currently held are shown under the keyboard."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the coverage percentage mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Coverage is the share of the 104-key ANSI layout that you have pressed at least once. Repeatedly pressing the same key increases the total press counter but never the unique key counter, so the percentage cannot be inflated by hitting one key many times."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is the double-click detection calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tester measures the time between two consecutive presses of the same button and checks that the pointer barely moved. Under 500 milliseconds the pair is reported as a double-click, matching the usual operating system threshold. Intervals close to the limit are flagged as slow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My mouse does not have a middle button. What should the counter show?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Zero, and that is the expected result. Many mice have no middle button, and some laptop trackpads have no middle click at all. The tester counts what your hardware actually reports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the right-click menu blocked inside the test area?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "So the right button can be counted. The context menu is suppressed only inside the test box; everywhere else on the page the right click behaves exactly as usual."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the mouse test detect the scroll wheel direction correctly?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the wheel readout shows whether the last movement was up, down, left or right, and the scroll counter accumulates the distance reported by the operating system. Note that high-resolution wheels report many small steps instead of one step per notch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a browser test prove that my keyboard is healthy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It proves that the operating system delivers the key events to the page. Worn switches, an intermittent cable, a broken keyboard matrix or a failing controller can still produce correct events while the hardware feels wrong."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the site use cookies?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tester itself does not set tracking cookies. When advertising is enabled, this site may use cookies and similar technologies of Google AdSense, and your consent choice is stored locally in your browser. You can change that choice at any time through the cookie settings link in the footer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the page work without an internet connection?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tester itself does, once the page is loaded: all detection happens locally and no request is made while you test. Advertising obviously requires a connection."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the keyboard not match the layout I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The on-screen keyboard is a fixed reference of the standard 104-key ANSI layout. Because detection is based on physical positions, your AZERTY or QWERTZ keyboard still lights up the correct physical keys, but the printed characters belong to the US layout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the side buttons of my mouse supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, buttons 4 and 5 are counted when your mouse has them and the operating system forwards them. Some mice expose more than five buttons; the tester counts the two most common extra buttons."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I reset the test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the Reset test button above the keyboard or inside the mouse area. Every counter returns to zero and the highlighted keys are cleared. Reloading the page has the same effect."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="../index.html">
+      <span class="brand__mark" aria-hidden="true">KC</span>
+      <span>KEYCHECK</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="../index.html">Tester</a>
+      <a href="../guides/diagnostico.html">Diagnostics</a>
+      <a href="../guides/faq.html">FAQ</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero__eyebrow"><span aria-hidden="true">●</span> FAQ</p>
+      <h1>Frequently asked questions</h1>
+      <p class="lead">
+        How the tester works, what it measures and — just as important — what it cannot measure. If your question is
+        not here, the <a href="../contact.html">contact page</a> is the fastest way to reach us.
+      </p>
+    </section>
+
+    <div class="ad-slot ad-slot--reserved" data-ad-placement="header" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+    <div class="layout">
+      <div class="layout__main">
+        <section class="section" style="padding-top:0">
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Does the tester record what I type?</summary>
+              <div class="faq-item__body">
+                <p>No. Every key event is handled by JavaScript inside your browser and only anonymous counters are updated. The characters you type are never transmitted, never stored and never logged. Reloading the page clears the test.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Is the tool free?</summary>
+              <div class="faq-item__body">
+                <p>Yes. The keyboard and mouse tester has no paid tier, no account and no installation. The site may show advertising to cover hosting costs, but the tool itself always stays free and complete.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Which keys can the browser never detect?</summary>
+              <div class="faq-item__body">
+                <p>Keys that the operating system reserves for itself: system shortcuts, the Windows key on many configurations, function keys handled by the firmware, and manufacturer hotkeys. They are intercepted before any application, including the browser, can see them.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why does a key stay highlighted after I release it?</summary>
+              <div class="faq-item__body">
+                <p>Usually the browser never got the key-up event, which happens when the window loses focus while a key is held. Click on the page, press the <em>Reset test</em> button, or switch windows and back to clear the state.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Does the tester work with all keyboard layouts?</summary>
+              <div class="faq-item__body">
+                <p>Yes. Keys are identified by their physical position using the <code>code</code> property of the keyboard event, so QWERTY, AZERTY, QWERTZ and other layouts are all supported. The layout drawn on screen is the standard US ANSI reference.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Can I test an external keyboard on my phone or tablet?</summary>
+              <div class="faq-item__body">
+                <p>Yes. Connect a Bluetooth or USB keyboard to the device, open this page in the browser and type. The virtual keyboard shows the physical keys being pressed. The on-screen keyboard of the device itself does not generate real key events, so a phone without an external keyboard cannot test itself.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why are Ctrl, Cmd or Alt combinations not counted?</summary>
+              <div class="faq-item__body">
+                <p>Because those combinations are browser and system shortcuts. Counting them would break refresh, copy, paste and window management, so the tester ignores the combination and only counts the modifier key itself. The modifiers that are currently held are shown under the keyboard.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>What does the coverage percentage mean?</summary>
+              <div class="faq-item__body">
+                <p>Coverage is the share of the 104-key ANSI layout that you have pressed at least once. Repeatedly pressing the same key increases the total press counter but never the unique key counter, so the percentage cannot be inflated by hitting one key many times.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>How is the double-click detection calculated?</summary>
+              <div class="faq-item__body">
+                <p>The tester measures the time between two consecutive presses of the same button and checks that the pointer barely moved. Under 500 milliseconds the pair is reported as a double-click, matching the usual operating system threshold. Intervals close to the limit are flagged as slow.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>My mouse does not have a middle button. What should the counter show?</summary>
+              <div class="faq-item__body">
+                <p>Zero, and that is the expected result. Many mice have no middle button, and some laptop trackpads have no middle click at all. The tester counts what your hardware actually reports.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why is the right-click menu blocked inside the test area?</summary>
+              <div class="faq-item__body">
+                <p>So the right button can be counted. The context menu is suppressed only inside the test box; everywhere else on the page the right click behaves exactly as usual.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Does the mouse test detect the scroll wheel direction correctly?</summary>
+              <div class="faq-item__body">
+                <p>Yes, the wheel readout shows whether the last movement was up, down, left or right, and the scroll counter accumulates the distance reported by the operating system. Note that high-resolution wheels report many small steps instead of one step per notch.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Can a browser test prove that my keyboard is healthy?</summary>
+              <div class="faq-item__body">
+                <p>No. It proves that the operating system delivers the key events to the page. Worn switches, an intermittent cable, a broken keyboard matrix or a failing controller can still produce correct events while the hardware feels wrong.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Does the site use cookies?</summary>
+              <div class="faq-item__body">
+                <p>The tester itself does not set tracking cookies. When advertising is enabled, this site may use cookies and similar technologies of Google AdSense, and your consent choice is stored locally in your browser. You can change that choice at any time through the cookie settings link in the footer.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Does the page work without an internet connection?</summary>
+              <div class="faq-item__body">
+                <p>The tester itself does, once the page is loaded: all detection happens locally and no request is made while you test. Advertising obviously requires a connection.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why does the keyboard not match the layout I use?</summary>
+              <div class="faq-item__body">
+                <p>The on-screen keyboard is a fixed reference of the standard 104-key ANSI layout. Because detection is based on physical positions, your AZERTY or QWERTZ keyboard still lights up the correct physical keys, but the printed characters belong to the US layout.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Are the side buttons of my mouse supported?</summary>
+              <div class="faq-item__body">
+                <p>Yes, buttons 4 and 5 are counted when your mouse has them and the operating system forwards them. Some mice expose more than five buttons; the tester counts the two most common extra buttons.</p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>How do I reset the test?</summary>
+              <div class="faq-item__body">
+                <p>Use the <em>Reset test</em> button above the keyboard or inside the mouse area. Every counter returns to zero and the highlighted keys are cleared. Reloading the page has the same effect.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <div class="ad-slot ad-slot--reserved" data-ad-placement="belowTester" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+        <section class="section">
+          <div class="card">
+            <h2 class="card__title">Still stuck?</h2>
+            <p class="card__hint">The diagnostics guide explains how to isolate a keyboard or mouse fault step by step.</p>
+            <p><a class="btn btn--primary" href="../guides/diagnostico.html">Read the diagnostics guide</a></p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="layout__aside" aria-label="Sidebar">
+        <div class="ad-slot ad-slot--sidebar ad-slot--reserved" data-ad-placement="sidebar" aria-label="Advertisement" style="--ad-reserve:625px"><span class="ad-slot__label">Advertisement</span></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <h2>KEYCHECK</h2>
+        <p>
+          A free online keyboard and mouse tester. Everything runs locally in your browser: the keys you press
+          and the clicks you make are never uploaded or stored.
+        </p>
+      </div>
+      <div>
+        <h2>Guides</h2>
+        <ul>
+          <li><a href="../guides/diagnostico.html">Keyboard &amp; mouse diagnostics</a></li>
+          <li><a href="../guides/faq.html">Frequently asked questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="../terms.html">Terms of Use</a></li>
+          <li>
+            <button type="button" class="linkish" data-consent-settings>Cookie settings</button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="../contact.html">Contact page</a></li>
+          <li><a href="mailto:polluxstudioio@gmail.com">polluxstudioio@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; 2026 KEYCHECK. All rights reserved.</span>
+      <span>Free tool &middot; Advertising is the only monetisation &middot; No data collection</span>
+    </div>
+  </div>
+</footer>
+
+<div class="consent" id="consent-banner" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text" data-open="false">
+  <h2 id="consent-title">Cookies and advertising</h2>
+  <p id="consent-text">
+    KEYCHECK itself stores nothing about you. If advertising is enabled, this site and Google AdSense may use
+    cookies to serve and measure ads. Choose whether to allow advertising cookies.
+    Read the <a href="../privacy.html">Privacy Policy</a>.
+  </p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary btn--sm" data-consent-accept>Accept advertising cookies</button>
+    <button type="button" class="btn btn--sm" data-consent-decline>Decline</button>
+  </div>
+</div>
+
+
+<script src="../assets/js/site-config.js" defer></script>
+<script src="../assets/js/consent.js" defer></script>
+<script src="../assets/js/adsense.js" defer></script>
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>

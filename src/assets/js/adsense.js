@@ -125,6 +125,20 @@
     }
   }
 
+  /** Auto ads: Google places the ads itself, so no manual unit is queued. */
+  function pushAutoAds() {
+    if (state.pushed.__auto__) return;
+    state.pushed.__auto__ = true;
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: cfg.publisherId.trim(),
+        enable_page_level_ads: true
+      });
+    } catch (err) {
+      /* queueing must never break the page */
+    }
+  }
+
   /** Loads the AdSense script and fills the reserved units. */
   function init() {
     if (!isEnabled()) {
@@ -135,17 +149,23 @@
 
     reserve();
 
+    const deliver = () => {
+      if (cfg.autoAds) {
+        pushAutoAds();
+      } else {
+        Object.keys(state.reserved).forEach(push);
+      }
+    };
+
     if (!state.scriptLoaded) {
       state.scriptLoaded = true;
       loadScript()
-        .then(() => {
-          Object.keys(state.reserved).forEach(push);
-        })
+        .then(deliver)
         .catch(() => {
           log('AdSense failed to load — the tool keeps working.');
         });
     } else {
-      Object.keys(state.reserved).forEach(push);
+      deliver();
     }
 
     let resizeTimer = 0;
@@ -197,7 +217,7 @@
         if (!placementEnabled(placement) || !slotId) return;
         buildSlot(el, placement, slotId);
         state.reserved[placement] = el;
-        if (state.scriptLoaded) push(placement);
+        if (state.scriptLoaded && !cfg.autoAds) push(placement);
       }
     });
     syncSidebar();

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About KEYCHECK — A Free, Private Keyboard &amp; Mouse Tester</title>
+<meta name="description" content="What KEYCHECK is, how it works, what it deliberately does not do and how the site is funded — a browser tester that never records what you type.">
+<link rel="canonical" href="https://checkyourkeyboard.com/about.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0d0f12">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KEYCHECK">
+<meta property="og:title" content="About KEYCHECK">
+<meta property="og:description" content="A free, privacy-first keyboard and mouse tester that runs entirely in your browser.">
+<meta property="og:url" content="https://checkyourkeyboard.com/about.html">
+<meta property="og:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About KEYCHECK">
+<meta name="twitter:description" content="A free, privacy-first keyboard and mouse tester that runs entirely in your browser.">
+<meta name="twitter:image" content="https://checkyourkeyboard.com/assets/img/og-image.png">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">KC</span>
+      <span>KEYCHECK</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html">Tester</a>
+      <a href="guides/diagnostico.html">Diagnostics</a>
+      <a href="guides/faq.html">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero__eyebrow"><span aria-hidden="true">●</span> About</p>
+      <h1>A small tool that does exactly one thing</h1>
+      <p class="lead">
+        KEYCHECK is a free online keyboard and mouse tester. It shows you whether your input devices are
+        delivering their events correctly — and nothing else. No account, no installation, no telemetry, and no
+        interest in what you type.
+      </p>
+    </section>
+
+    <div class="ad-slot ad-slot--reserved" data-ad-placement="header" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+
+    <div class="layout">
+      <div class="layout__main">
+        <article class="prose">
+          <h2>What the tool does</h2>
+          <ul>
+            <li><strong>Keyboard test</strong> — renders a full 104-key ANSI reference layout, highlights every physical key you press, counts the total presses, counts how many different keys you have tried, and shows the coverage as a percentage. A running history of the last presses is displayed in order.</li>
+            <li><strong>Mouse test</strong> — counts left, right, middle and side button clicks, registers scroll wheel events and the distance they report, follows the pointer path inside the test area and gives an indicative double-click measurement with the interval in milliseconds.</li>
+            <li><strong>Honest limits</strong> — the page tells you what a browser cannot check, so you do not mistake a clean result for a hardware diagnosis.</li>
+          </ul>
+
+          <h2>How it is built</h2>
+          <p>
+            The site is plain HTML, CSS and JavaScript with no framework, no analytics package and no external
+            font or script dependency. Keys are identified with the physical <code>code</code> property of the
+            keyboard event rather than the character it produces, which means the detection works the same way on
+            QWERTY, AZERTY and QWERTZ layouts. Every counter is updated by local JavaScript; the site has no
+            backend that receives keystrokes, because there is no backend for that purpose at all.
+          </p>
+
+          <h2>What we deliberately do not do</h2>
+          <ul>
+            <li>We do not record, store or transmit the keys you press.</li>
+            <li>We do not use keyloggers, session recorders or behaviour tracking.</li>
+            <li>We do not ask for permissions we do not need — no camera, no microphone, no clipboard, no notifications.</li>
+            <li>We do not require an account, and we do not sell or share personal data.</li>
+            <li>We do not show artificial or forced advertising, and the ads never overlap the interactive tool.</li>
+          </ul>
+
+          <h2>How the site is funded</h2>
+          <p>
+            Hosting a site like this costs money, so the pages may carry advertising served by Google AdSense.
+            That is the only monetisation: there are no affiliate links, no product catalogues and no paid tier.
+            The tester itself remains free and fully functional whether or not ads are shown, and the advertising
+            layer is technically independent of the tool — if the ad script fails to load, nothing else is affected.
+          </p>
+
+          <h2>Accuracy and honesty</h2>
+          <p>
+            We describe what the tool measures in precise terms, because a tester that overstates itself is worse
+            than no tester. The page never claims to diagnose hardware failures, never invents usage statistics and
+            never publishes claims about results that have not been verified. When a limitation exists, it is
+            written down on the page itself rather than hidden.
+          </p>
+
+          <h2>Get in touch</h2>
+          <p>
+            Found a bug, a key that behaves differently on your setup, or a question the FAQ did not answer?
+            The <a href="contact.html">contact page</a> is the fastest way to reach us, and corrections are
+            always welcome.
+          </p>
+        </article>
+
+        <div class="ad-slot ad-slot--reserved" data-ad-placement="belowTester" aria-label="Advertisement" style="--ad-reserve:285px"><span class="ad-slot__label">Advertisement</span></div>
+      </div>
+
+      <aside class="layout__aside" aria-label="Sidebar">
+        <div class="ad-slot ad-slot--sidebar ad-slot--reserved" data-ad-placement="sidebar" aria-label="Advertisement" style="--ad-reserve:625px"><span class="ad-slot__label">Advertisement</span></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <h2>KEYCHECK</h2>
+        <p>
+          A free online keyboard and mouse tester. Everything runs locally in your browser: the keys you press
+          and the clicks you make are never uploaded or stored.
+        </p>
+      </div>
+      <div>
+        <h2>Guides</h2>
+        <ul>
+          <li><a href="guides/diagnostico.html">Keyboard &amp; mouse diagnostics</a></li>
+          <li><a href="guides/faq.html">Frequently asked questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li>
+            <button type="button" class="linkish" data-consent-settings>Cookie settings</button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="contact.html">Contact page</a></li>
+          <li><a href="mailto:polluxstudioio@gmail.com">polluxstudioio@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span>&copy; 2026 KEYCHECK. All rights reserved.</span>
+      <span>Free tool &middot; Advertising is the only monetisation &middot; No data collection</span>
+    </div>
+  </div>
+</footer>
+
+<div class="consent" id="consent-banner" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text" data-open="false">
+  <h2 id="consent-title">Cookies and advertising</h2>
+  <p id="consent-text">
+    KEYCHECK itself stores nothing about you. If advertising is enabled, this site and Google AdSense may use
+    cookies to serve and measure ads. Choose whether to allow advertising cookies.
+    Read the <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary btn--sm" data-consent-accept>Accept advertising cookies</button>
+    <button type="button" class="btn btn--sm" data-consent-decline>Decline</button>
+  </div>
+</div>
+
+
+<script src="assets/js/site-config.js" defer></script>
+<script src="assets/js/consent.js" defer></script>
+<script src="assets/js/adsense.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

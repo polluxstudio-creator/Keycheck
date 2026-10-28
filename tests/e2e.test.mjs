@@ -24,17 +24,24 @@ try {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 4188;
 const ADS_PORT = 4189;
+const AUTO_PORT = 4190;
 
 let browser;
 let server;
 let adsServer;
+let autoServer;
 let base;
 let adsBase;
 
-const build = (out, forceAds) => {
+const build = (out, forceAds, autoAds) => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'build.mjs')], {
     cwd: ROOT,
-    env: { ...process.env, KEYCHECK_OUT: out, KEYCHECK_FORCE_ADS: forceAds ? '1' : '0' },
+    env: {
+      ...process.env,
+      KEYCHECK_OUT: out,
+      KEYCHECK_FORCE_ADS: forceAds ? '1' : '0',
+      KEYCHECK_AUTO_ADS: autoAds ? '1' : '0'
+    },
     stdio: 'pipe'
   });
 };
@@ -58,8 +65,10 @@ const startServer = (dir, port) =>
 before(async () => {
   build('dist', false);
   build('dist-ads', true);
+  build('dist-auto', true, '1');
   server = await startServer('dist', PORT);
   adsServer = await startServer('dist-ads', ADS_PORT);
+  autoServer = await startServer('dist-auto', AUTO_PORT);
   base = `http://127.0.0.1:${PORT}`;
   adsBase = `http://127.0.0.1:${ADS_PORT}`;
   browser = await chromium.launch();
@@ -69,6 +78,7 @@ after(async () => {
   if (browser) await browser.close();
   if (server) server.kill();
   if (adsServer) adsServer.kill();
+  if (autoServer) autoServer.kill();
 });
 
 /** Opens a page and collects console errors / page errors. */
@@ -530,6 +540,26 @@ describe('advertising', () => {
 
     const cls = await page.evaluate(() => window.__shifts.reduce((a, b) => a + b, 0));
     assert.ok(cls < 0.05, `the layout shift must stay low (got ${cls})`);
+    await context.close();
+  });
+
+  test('auto ads enable page level ads instead of the manual units', async () => {
+    // build variant with autoAds on
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'build.mjs')], {
+      cwd: ROOT,
+      env: { ...process.env, KEYCHECK_OUT: 'dist-auto', KEYCHECK_FORCE_ADS: '1', KEYCHECK_AUTO_ADS: '1' },
+      stdio: 'pipe'
+    });
+    const { page, context, requests } = await open(`http://127.0.0.1:${AUTO_PORT}/index.html`);
+    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed */' })
+    );
+    await page.click('[data-consent-accept]');
+    await page.waitForTimeout(400);
+
+    const pushed = await page.evaluate(() => (window.adsbygoogle || []).map((a) => a.enable_page_level_ads));
+    assert.ok(pushed.includes(true), 'the auto ads payload must be queued');
+    assert.equal(requests.filter((u) => u.includes('googlesyndication')).length, 1, 'the script is requested once');
     await context.close();
   });
 

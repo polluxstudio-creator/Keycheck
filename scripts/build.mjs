@@ -37,7 +37,8 @@ function effectiveAds() {
       sidebar: '2222222222',
       belowTester: '3333333333',
       betweenSections: '4444444444'
-    }
+    },
+    autoAds: process.env.KEYCHECK_AUTO_ADS === '1'
   };
 }
 
