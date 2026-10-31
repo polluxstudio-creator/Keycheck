@@ -144,11 +144,12 @@ function applyAdReservation(content) {
     (match, extraClasses, placement, rest) => {
       if (!reserve) return match;
       const height = (ads.reserveHeight || {})[placement];
+      const heightDesktop = (ads.reserveHeightDesktop || {})[placement];
       if (!height) return match;
       const label = ads.label || 'Advertisement';
       return (
         `<div class="ad-slot${extraClasses} ad-slot--reserved" data-ad-placement="${placement}"${rest}` +
-        ` style="--ad-reserve:${height}px">` +
+        ` style="--ad-reserve:${height}px${heightDesktop ? `;--ad-reserve-desktop:${heightDesktop}px` : ''}">` +
         `<span class="ad-slot__label">${label}</span>` +
         `</div>`
       );

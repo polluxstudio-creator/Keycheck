@@ -54,6 +54,10 @@ window.KEYCHECK_CONFIG = {
       "betweenSections": 285
     },
     "label": "Advertisement",
-    "reserveHeightNote": "Altura TOTAL del hueco (etiqueta + unidad). El valor por defecto (285) cubre una unidad responsiva de 300x250; ajústalo al tuyo: ~115 para 728x90, ~285 para 300x250, ~625 para 300x600 vertical."
+    "reserveHeightNote": "Altura TOTAL del hueco (etiqueta + unidad). El valor por defecto (285) cubre una unidad responsiva de 300x250; ajústalo al tuyo: ~115 para 728x90, ~285 para 300x250, ~625 para 300x600 vertical.",
+    "reserveHeightDesktop": {
+      "header": 130,
+      "headerNote": "En escritorio el hueco de cabecera se limita a 728px de ancho, asi que Google sirve un banner horizontal de 728x90 (100px). Con el movil se reserva el alto maximo (300x250), que no empuja el contenido."
+    }
   }
 };

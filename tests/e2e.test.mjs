@@ -498,7 +498,11 @@ describe('advertising', () => {
 
     // the expected reservation comes from the configuration file
     const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
-    const expected = `${cfg.adsense.reserveHeight.header}px`;
+    // On desktop the header unit is capped at 728px, so Google serves a
+    // horizontal 728x90 banner and the reserved height is the smaller one.
+    const desktop = (cfg.adsense.reserveHeightDesktop || {}).header;
+    const wide = page.viewportSize().width >= 768;
+    const expected = `${wide && desktop ? desktop : cfg.adsense.reserveHeight.header}px`;
 
     const reserved = await page.$eval('[data-ad-placement="header"]', (el) => ({
       cls: el.className,
