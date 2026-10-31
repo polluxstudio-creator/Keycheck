@@ -1,6 +1,8 @@
 node_modules/
 dist/
 dist-ads/
+dist-auto/
+dist-noads/
 shots/
 *.log
 .deploy-keys/
