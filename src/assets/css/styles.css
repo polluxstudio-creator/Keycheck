@@ -1182,12 +1182,14 @@ small {
    very first paint, even before the advertising code is loaded. The frame
    stretches to fill the reserved height so an empty slot still looks like a
    deliberate placeholder instead of a stray line with a gap under it. */
-.ad-slot--reserved {
+/* The double class keeps the specificity above `.ad-slot:not(:empty)`, which
+   would otherwise win and turn the slot back into a plain block. */
+.ad-slot.ad-slot--reserved {
   display: flex;
   flex-direction: column;
 }
 
-.ad-slot--reserved .ad-slot__frame {
+.ad-slot.ad-slot--reserved .ad-slot__frame {
   flex: 1;
   align-items: center;
 }
