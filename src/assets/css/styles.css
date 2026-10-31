@@ -1179,9 +1179,17 @@ small {
 }
 
 /* Slots whose space was reserved at build time keep their place from the
-   very first paint, even before the advertising code is loaded. */
+   very first paint, even before the advertising code is loaded. The frame
+   stretches to fill the reserved height so an empty slot still looks like a
+   deliberate placeholder instead of a stray line with a gap under it. */
 .ad-slot--reserved {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+.ad-slot--reserved .ad-slot__frame {
+  flex: 1;
+  align-items: center;
 }
 
 /* The vertical unit only exists on large screens: on small ones its reserved
