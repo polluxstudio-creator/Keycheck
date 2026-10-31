@@ -19,7 +19,7 @@
     "useGoogleCmpNote": "Poner a true cuando se active Google Funding Choices en la consola de AdSense: el CMP oficial de Google gestiona el consentimiento y este proyecto deja de mostrar su banner."
   },
   "adsense": {
-    "enabled": false,
+    "enabled": true,
     "publisherId": "ca-pub-6072260383832511",
     "autoAds": false,
     "enabledPlacements": [
@@ -30,7 +30,7 @@
     ],
     "slots": {
       "header": "9308727306",
-      "sidebar": "",
+      "sidebar": "6303290018",
       "belowTester": "",
       "betweenSections": ""
     },

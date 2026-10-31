@@ -27,6 +27,12 @@ const FORCE_ADS = process.env.KEYCHECK_FORCE_ADS === '1';
 
 /** AdSense configuration actually used for this build. */
 function effectiveAds() {
+  // KEYCHECK_NO_ADS=1 builds the site as it looks before AdSense is set up:
+  // no ad units, no reservation and no consent banner. The test suite uses
+  // it to check the unconfigured behaviour.
+  if (process.env.KEYCHECK_NO_ADS === '1') {
+    return { ...config.adsense, enabled: false, autoAds: false };
+  }
   if (!FORCE_ADS) return config.adsense;
   return {
     ...config.adsense,
@@ -143,6 +149,10 @@ function applyAdReservation(content) {
     /<div class="ad-slot([^"]*)" data-ad-placement="([a-zA-Z]+)"([^>]*)><\/div>/g,
     (match, extraClasses, placement, rest) => {
       if (!reserve) return match;
+      // A placement without its own ad unit must not leave an empty labelled
+      // box behind: only the units that really exist are reserved.
+      const slotId = (ads.slots || {})[placement];
+      if (typeof slotId !== 'string' || !slotId.trim()) return match;
       const height = (ads.reserveHeight || {})[placement];
       const heightDesktop = (ads.reserveHeightDesktop || {})[placement];
       if (!height) return match;

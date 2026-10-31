@@ -37,7 +37,7 @@ window.KEYCHECK_CONFIG = {
     },
     "formats": {
       "header": "horizontal",
-      "sidebar": "vertical",
+      "sidebar": "auto",
       "belowTester": "horizontal",
       "betweenSections": "horizontal"
     },
@@ -58,6 +58,7 @@ window.KEYCHECK_CONFIG = {
     "reserveHeightDesktop": {
       "header": 130,
       "headerNote": "En escritorio el hueco de cabecera se limita a 728px de ancho, asi que Google sirve un banner horizontal de 728x90 (100px). Con el movil se reserva el alto maximo (300x250), que no empuja el contenido."
-    }
+    },
+    "formatsNote": "Las dos unidades se crean como 'Adaptable' (responsive), asi que data-ad-format vale 'auto' en los dos huecos. El lateral mide 300px de ancho, asi que Google sirve un 300x250 o un 300x600."
   }
 };

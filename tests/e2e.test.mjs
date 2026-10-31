@@ -25,22 +25,26 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 4188;
 const ADS_PORT = 4189;
 const AUTO_PORT = 4190;
+const LIVE_PORT = 4191;
 
 let browser;
 let server;
 let adsServer;
+let liveServer;
 let autoServer;
 let base;
 let adsBase;
+let liveBase;
 
-const build = (out, forceAds, autoAds) => {
+const build = (out, forceAds, autoAds, noAds) => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'build.mjs')], {
     cwd: ROOT,
     env: {
       ...process.env,
       KEYCHECK_OUT: out,
       KEYCHECK_FORCE_ADS: forceAds ? '1' : '0',
-      KEYCHECK_AUTO_ADS: autoAds ? '1' : '0'
+      KEYCHECK_AUTO_ADS: autoAds ? '1' : '0',
+      KEYCHECK_NO_ADS: noAds ? '1' : '0'
     },
     stdio: 'pipe'
   });
@@ -63,14 +67,21 @@ const startServer = (dir, port) =>
   });
 
 before(async () => {
+  // dist      : the real configuration, with the real AdSense units
+  // dist-noads: the site as it looks before AdSense is configured
+  // dist-ads  : a full set of test units (every placement filled)
+  // dist-auto : the same, but with auto ads
   build('dist', false);
+  build('dist-noads', false, false, true);
   build('dist-ads', true);
   build('dist-auto', true, '1');
-  server = await startServer('dist', PORT);
+  server = await startServer('dist-noads', PORT);
   adsServer = await startServer('dist-ads', ADS_PORT);
+  liveServer = await startServer('dist', LIVE_PORT);
   autoServer = await startServer('dist-auto', AUTO_PORT);
   base = `http://127.0.0.1:${PORT}`;
   adsBase = `http://127.0.0.1:${ADS_PORT}`;
+  liveBase = `http://127.0.0.1:${LIVE_PORT}`;
   browser = await chromium.launch();
 });
 
@@ -78,6 +89,7 @@ after(async () => {
   if (browser) await browser.close();
   if (server) server.kill();
   if (adsServer) adsServer.kill();
+  if (liveServer) liveServer.kill();
   if (autoServer) autoServer.kill();
 });
 
@@ -493,6 +505,37 @@ describe('advertising', () => {
     assert.deepEqual(errors, []);
   });
 
+  test('the production build serves exactly the ad units of the configuration', async () => {
+    const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
+    const { page, context } = await open(`${liveBase}/index.html`);
+    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
+    );
+    await page.click('[data-consent-accept]');
+    await page.waitForTimeout(500);
+
+    const ins = await page.$$eval('[data-ad-placement] ins', (els) =>
+      els.map((el) => ({
+        client: el.dataset.adClient,
+        slot: el.dataset.adSlot,
+        placement: el.closest('[data-ad-placement]').dataset.adPlacement
+      }))
+    );
+    assert.ok(ins.length > 0, 'the production build must render its ad units');
+    for (const unit of ins) {
+      assert.equal(unit.client, cfg.adsense.publisherId, 'the publisher id must be the configured one');
+      assert.equal(unit.slot, cfg.adsense.slots[unit.placement],
+        `the ${unit.placement} unit must use its own slot id`);
+    }
+    // every configured placement must be served and no other one
+    const configured = Object.entries(cfg.adsense.slots)
+      .filter(([, id]) => id && String(id).trim())
+      .map(([placement]) => placement);
+    assert.deepEqual(ins.map((u) => u.placement).sort(), configured.sort(),
+      'only the configured placements may be served');
+    await context.close();
+  });
+
   test('the ad space is reserved in the markup and no request is made before consent', async () => {
     const { page, context, requests } = await open(`${adsBase}/index.html`);
 
@@ -511,6 +554,13 @@ describe('advertising', () => {
       hasLabel: !!el.querySelector('.ad-slot__label')
     }));
     assert.match(reserved.cls, /ad-slot--reserved/, 'the slot must be reserved in the markup');
+    // placements without an ad unit of their own must stay empty (no box)
+    for (const empty of await page.$$eval('[data-ad-placement]', (els) =>
+      els.filter((e) => !e.className.includes('ad-slot--reserved')).map((e) => e.dataset.adPlacement))) {
+      const slot = (cfg.adsense.slots || {})[empty];
+      assert.ok(!slot || !String(slot).trim(),
+        `the ${empty} placement has no ad unit and must not reserve any space`);
+    }
     assert.equal(reserved.minHeight, expected, 'the reserved height must come from the configuration');
     assert.ok(reserved.height >= parseInt(expected, 10), 'the reserved space must be visible from the first paint');
     assert.ok(reserved.hasLabel, 'the Advertisement label must be part of the reserved slot');

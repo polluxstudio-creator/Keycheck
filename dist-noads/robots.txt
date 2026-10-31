@@ -1,0 +1,5 @@
+# KEYCHECK — Free Online Keyboard & Mouse Tester
+User-agent: *
+Allow: /
+
+Sitemap: https://checkyourkeyboard.com/sitemap.xml
