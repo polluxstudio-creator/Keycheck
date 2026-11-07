@@ -713,6 +713,55 @@ describe('pages, SEO and accessibility', () => {
     await c3.close();
   });
 
+  test('the theme switch works, is remembered and never breaks the layout', async () => {
+    const { page, context, errors } = await open(`${base}/index.html`);
+
+    // the site is light by default
+    assert.equal(await page.getAttribute('html', 'data-theme'), 'light', 'the default theme must be light');
+
+    const bg = async () => page.$eval('body', (el) => getComputedStyle(el).backgroundColor);
+    assert.equal(await bg(), 'rgb(244, 246, 248)', 'the light background must be applied');
+
+    // switch to dark
+    await page.click('[data-theme-toggle]');
+    await page.waitForTimeout(120);
+    assert.equal(await page.getAttribute('html', 'data-theme'), 'dark', 'the toggle must switch the theme');
+    assert.equal(await bg(), 'rgb(13, 15, 18)', 'the dark background must be applied');
+    assert.equal(await page.getAttribute('[data-theme-toggle]', 'aria-pressed'), 'true');
+    // the label always names the theme it switches to
+    assert.match(await page.getAttribute('[data-theme-toggle]', 'aria-label'), /light theme/i);
+
+    // the choice survives a reload
+    await page.reload({ waitUntil: 'load' });
+    assert.equal(await page.getAttribute('html', 'data-theme'), 'dark', 'the theme must be remembered');
+
+    // and back to light
+    await page.click('[data-theme-toggle]');
+    await page.waitForTimeout(120);
+    assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
+    assert.equal(await page.getAttribute('[data-theme-toggle]', 'aria-pressed'), 'false');
+    assert.match(await page.getAttribute('[data-theme-toggle]', 'aria-label'), /dark theme/i);
+
+    // the tester still works in both themes
+    for (const theme of ['light', 'dark']) {
+      await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+      await page.locator('#panel-keyboard').click({ position: { x: 5, y: 5 } });
+      await page.keyboard.press('m');
+      const presses = await num(page, 'kb-presses');
+      assert.ok(presses >= 1, `the keyboard must work in the ${theme} theme`);
+    }
+
+    // no horizontal overflow in either theme
+    for (const theme of ['light', 'dark']) {
+      await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+      const overflow = await page.evaluate(() =>
+        document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      assert.ok(overflow <= 0, `the ${theme} theme must not overflow horizontally`);
+    }
+    await context.close();
+    assert.deepEqual(errors, []);
+  });
+
   test('the only publisher id in the markup is the configured one', async () => {
     const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
     const configured = cfg.adsense.publisherId;

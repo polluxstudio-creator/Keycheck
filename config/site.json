@@ -6,9 +6,10 @@
     "description": "Test every key and every mouse button directly in your browser. Free, private and instant — check key response, mouse buttons, scroll wheel and double-click behaviour without installing anything.",
     "locale": "en",
     "lang": "en",
-    "themeColor": "#0d0f12",
+    "themeColor": "#f4f6f8",
     "twitterHandle": "@keycheckapp",
-    "contactEmail": "polluxstudioio@gmail.com"
+    "contactEmail": "polluxstudioio@gmail.com",
+    "themeColorNote": "Color inicial de la barra del navegador. El script de tema lo ajusta al instante si el visitante elige el tema oscuro."
   },
   "consent": {
     "enabled": true,

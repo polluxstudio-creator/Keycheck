@@ -28,6 +28,22 @@
   --amber: #f5c451;
   --red: #f87171;
 
+  /* Acentos usados como TEXTO sobre el fondo de la pagina. Los acentos de
+     superficie (los de arriba) se mantienen iguales en los dos temas para que
+     los degradados y su texto oscuro no pierdan contraste. */
+  --blue-text: #6c9bff;
+  --violet-text: #9a7bff;
+  --green-text: #35d399;
+
+  /* Colores propios del teclado y de los degradados */
+  --key-bg-1: #232830;
+  --key-bg-2: #1b1f25;
+  --green-2: #7ef0c0;
+  --blue-2: #7ea8ff;
+  --violet-2: #a78bff;
+  --shadow-strong: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --header-bg: rgba(13, 15, 18, 0.86);
+
   --r-lg: 16px;
   --r-md: 12px;
   --r-sm: 9px;
@@ -43,6 +59,43 @@
     Arial, "Noto Sans", sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
+/* ---------------------------------------------------------------- light theme
+   El sitio se muestra en claro por defecto (mejor para la lectura de los
+   anuncios y mayor fill de AdSense). El interruptor de la cabecera cambia el
+   atributo data-theme del elemento <html>. */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --bg-elev: #ffffff;
+  --card: #ffffff;
+  --card-2: #f1f3f6;
+  --card-3: #e6e9ee;
+  --line: rgba(15, 23, 42, 0.11);
+  --line-2: rgba(15, 23, 42, 0.2);
+
+  --text: #10151d;
+  --text-dim: #47525f;
+  --text-faint: #6b7683;
+
+  --green-soft: rgba(15, 157, 99, 0.12);
+  --green-line: rgba(15, 157, 99, 0.4);
+  --blue-soft: rgba(47, 111, 235, 0.1);
+  --violet-soft: rgba(109, 59, 214, 0.1);
+
+  --blue-text: #1d4ed8;
+  --violet-text: #6d3bd6;
+  --green-text: #0f8f5f;
+
+  --key-bg-1: #ffffff;
+  --key-bg-2: #e8ecf1;
+  --green-2: #34d399;
+  --blue-2: #1d4ed8;
+  --violet-2: #5b21b6;
+
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.07);
+  --shadow-strong: 0 10px 40px rgba(15, 23, 42, 0.18);
+  --header-bg: rgba(255, 255, 255, 0.88);
+}
+
 
 /* ------------------------------------------------------------------ base */
 *,
@@ -96,7 +149,7 @@ p {
 }
 
 a {
-  color: var(--blue);
+  color: var(--blue-text);
   text-decoration: none;
 }
 
@@ -205,7 +258,7 @@ small {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(13, 15, 18, 0.86);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -231,7 +284,7 @@ small {
 
 .brand:hover {
   text-decoration: none;
-  color: #fff;
+  color: var(--text);
 }
 
 .brand__mark {
@@ -278,6 +331,57 @@ small {
 .site-nav a[aria-current="page"] {
   color: var(--text);
   background: var(--card-2);
+}
+
+/* ------------------------------------------------------------ theme toggle */
+.theme-toggle {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  margin-left: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease,
+    transform 0.08s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--blue-text);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--blue-text);
+  outline-offset: 2px;
+}
+
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* The icon shows what the button will switch TO. */
+.theme-toggle__moon {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle__sun {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle__moon {
+  display: block;
 }
 
 .layout {
@@ -336,7 +440,7 @@ small {
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--green-text);
   background: var(--green-soft);
   border: 1px solid var(--green-line);
   padding: 0.28rem 0.7rem;
@@ -491,7 +595,7 @@ small {
 
 .btn:hover {
   background: var(--card-3);
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: var(--line-2);
 }
 
 .btn:active {
@@ -506,7 +610,7 @@ small {
 }
 
 .btn--primary:hover {
-  background: linear-gradient(140deg, #7ea8ff, #a78bff);
+  background: linear-gradient(140deg, var(--blue-2), var(--violet-2));
 }
 
 .btn--ghost {
@@ -558,15 +662,15 @@ small {
 }
 
 .stat__value--green {
-  color: var(--green);
+  color: var(--green-text);
 }
 
 .stat__value--blue {
-  color: var(--blue);
+  color: var(--blue-text);
 }
 
 .stat__value--violet {
-  color: var(--violet);
+  color: var(--violet-text);
 }
 
 .stat__sub {
@@ -589,7 +693,7 @@ small {
 .meter__fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--green), #7ef0c0);
+  background: linear-gradient(90deg, var(--green-text), var(--green-2));
   border-radius: 999px;
   transition: width 0.28s ease;
 }
@@ -681,7 +785,7 @@ small {
   min-width: 0;
   border-radius: 7px;
   border: 1px solid var(--line-2);
-  background: linear-gradient(180deg, #232830, #1b1f25);
+  background: linear-gradient(180deg, var(--key-bg-1), var(--key-bg-2));
   color: var(--text-dim);
   font: inherit;
   font-size: calc(var(--u) * 0.26);
@@ -759,7 +863,7 @@ small {
   height: 12px;
   border-radius: 4px;
   border: 1px solid var(--line-2);
-  background: #232830;
+  background: var(--key-bg-1);
 }
 
 .swatch--green {
@@ -812,7 +916,7 @@ small {
 }
 
 .history__chip b {
-  color: var(--green);
+  color: var(--green-text);
   font-size: 0.66rem;
   font-weight: 700;
 }
@@ -969,7 +1073,7 @@ small {
 
 .dbl[data-state="ok"] {
   border-color: var(--green-line);
-  color: var(--green);
+  color: var(--green-text);
   background: var(--green-soft);
 }
 
@@ -1077,7 +1181,7 @@ small {
 
 .faq-item > summary::after {
   content: "+";
-  color: var(--green);
+  color: var(--green-text);
   font-size: 1.2rem;
   line-height: 1;
   flex-shrink: 0;
@@ -1153,8 +1257,8 @@ small {
   display: grid;
   place-items: center;
   background: var(--blue-soft);
-  border: 1px solid rgba(108, 155, 255, 0.35);
-  color: var(--blue);
+  border: 1px solid var(--line-2);
+  color: var(--blue-text);
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -1341,7 +1445,7 @@ small {
   background: var(--card);
   border: 1px solid var(--line-2);
   border-radius: var(--r-md);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-strong);
   padding: 1rem 1.05rem;
   max-width: 640px;
   margin-inline: auto;
@@ -1384,7 +1488,7 @@ small {
 }
 
 .badge--green {
-  color: var(--green);
+  color: var(--green-text);
   border-color: var(--green-line);
   background: var(--green-soft);
 }

@@ -119,6 +119,12 @@ function applyTokens(content, pagePath) {
     // todas: "google-adsense-account" es la que busca el verificador de
     // AdSense y "google-adsense-platform-account" la que usa la plataforma
     // para los autoanuncios. Ninguna carga scripts ni cookies.
+    // Se ejecuta antes del primer pintado: fija el tema guardado para que la
+    // pagina no aparezca un instante en el color contrario.
+    THEME_BOOTSTRAP:
+      "<script>(function(){try{var t=localStorage.getItem('kc-theme');" +
+      "document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');" +
+      "}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>",
     ADSENSE_META: config.adsense.publisherId
       ? [
           `<meta name="google-adsense-account" content="${config.adsense.publisherId}">`,
