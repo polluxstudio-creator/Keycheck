@@ -343,21 +343,43 @@ Verificación manual adicional realizada durante el desarrollo:
   funciona con normalidad. La rueda también queda capturada dentro de esa área para que la página
   no salte mientras pruebas.
 
-## 8. Accesibilidad
+## 8. Tema claro / oscuro
+
+El sitio se sirve **en claro por defecto** (fondo `#f4f6f8`) y la cabecera incluye un interruptor
+con iconos de sol y luna para pasar al tema oscuro.
+
+- El tema se decide con el atributo `data-theme` del elemento `<html>`; todo el color sale de
+  variables CSS, así que los dos temas comparten la misma maquetación.
+- Un script diminuto en el `<head>` (`{{THEME_BOOTSTRAP}}`) aplica la preferencia guardada **antes
+  del primer pintado**, de modo que la página nunca aparece un instante en el color contrario.
+- `src/assets/js/theme.js` gestiona el interruptor y guarda la elección en `localStorage`
+  (`kc-theme`). Si el navegador bloquea el almacenamiento (modo privado), el tema sigue
+  funcionando en la sesión, solo que no se recuerda.
+- Los acentos que se usan como **texto** (`--blue-text`, `--green-text`, `--violet-text`) están
+  separados de los que se usan como **superficie** (los degradados de botones y pestañas), porque
+  un mismo azul no mantiene el contraste sobre blanco y sobre negro.
+- Motivo del tema claro por defecto: los anuncios se leen y se pulsan mucho más sobre fondo
+  blanco, lo que mejora el CTR y, con él, los ingresos.
+
+## 9. Accesibilidad
 
 - Navegación completa por teclado, foco visible (`:focus-visible`), skip link al contenido.
 - Patrón **ARIA tabs** correcto en el selector Keyboard/Mouse.
 - Los contadores viven en regiones `aria-live="polite"` y las líneas de estado (última tecla,
   instrucciones en vivo) usan `role="status"`.
-- Contraste calculado (WCAG 2.1): texto principal `#e9edf2` sobre `#0d0f12` = **16.3:1**;
-  texto secundario `#a3adba` sobre `#181c22` = **7.5:1**; texto tenue `#8a94a1` sobre `#181c22` =
-  **5.6:1**; verde de detección `#35d399` sobre la tecla `#232830` = **7.7:1**; azul de acción
-  `#6c9bff` sobre `#181c22` = **6.3:1**. Todos por encima del mínimo 4.5:1 (AAA para texto normal
-  en casi todos los casos).
+- Contraste calculado (WCAG 2.1) en el **tema oscuro**: texto principal `#e9edf2` sobre `#0d0f12` =
+  **16.3:1**; texto secundario `#a3adba` sobre `#181c22` = **7.5:1**; texto tenue `#8a94a1` sobre
+  `#181c22` = **5.6:1**; verde de detección `#35d399` sobre la tecla `#232830` = **7.7:1**; azul de
+  acción `#6c9bff` sobre `#181c22` = **6.3:1**.
+- Contraste calculado en el **tema claro**: texto principal `#10151d` sobre `#f4f6f8` = **16.9:1**;
+  texto secundario `#47525f` sobre `#ffffff` = **7.9:1**; azul de enlace `#1d4ed8` sobre `#ffffff` =
+  **6.4:1**; verde de detección `#0f8f5f` sobre `#ffffff` = **3.9:1** (se usa solo en elementos
+  grandes y con borde de apoyo). Todos por encima del mínimo 4.5:1 salvo ese último caso, que es
+  un elemento no textual (punto/borde).
 - `prefers-reduced-motion` respetado (se desactivan transiciones y scroll suave).
 - Foco visible incluso con teclado: la tecla pulsada se distingue por color **y** por estado.
 
-## 9. Limitaciones conocidas
+## 10. Limitaciones conocidas
 
 - **El navegador no puede ver todo.** El sistema operativo se queda con algunos atajos (tecla
   Windows, combinaciones de sistema, teclas de firmware), así que esas teclas nunca se detectan.
@@ -376,7 +398,7 @@ Verificación manual adicional realizada durante el desarrollo:
   muestra completa (104 máximo).
 - El proyecto **no está aprobado por AdSense**: la aprobación depende de la revisión de Google.
 
-## 10. Licencia y contenido
+## 11. Licencia y contenido
 
 El código de KEYCHECK es reutilizable; el diseño, los textos y la marca son originales (no se ha
 copiado código, identidad visual ni textos de la página de referencia). Las frases de las guías
