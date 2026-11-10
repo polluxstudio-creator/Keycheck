@@ -541,11 +541,7 @@ describe('advertising', () => {
 
     // the expected reservation comes from the configuration file
     const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
-    // On desktop the header unit is capped at 728px, so Google serves a
-    // horizontal 728x90 banner and the reserved height is the smaller one.
-    const desktop = (cfg.adsense.reserveHeightDesktop || {}).header;
-    const wide = page.viewportSize().width >= 768;
-    const expected = `${wide && desktop ? desktop : cfg.adsense.reserveHeight.header}px`;
+    const expected = `${cfg.adsense.reserveHeight.header}px`;
 
     const reserved = await page.$eval('[data-ad-placement="header"]', (el) => ({
       cls: el.className,
@@ -567,6 +563,38 @@ describe('advertising', () => {
 
     const google = requests.filter((u) => /googlesyndication|doubleclick|googleadservices/.test(u));
     assert.equal(google.length, 0, 'no request may be made to Google before the consent decision');
+    await context.close();
+  });
+
+  test('the header unit asks for a banner and the reserved space covers it', async () => {
+    const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
+    const { page, context } = await open(`${adsBase}/index.html`);
+    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
+    );
+    await page.click('[data-consent-accept]');
+    await page.waitForTimeout(500);
+
+    const header = await page.$eval('[data-ad-placement="header"] ins', (el) => ({
+      format: el.dataset.adFormat,
+      slot: el.dataset.adSlot
+    }));
+    assert.equal(header.format, 'horizontal',
+      'the header unit must ask for a banner: with "auto" Google serves 300x250 rectangles');
+    assert.ok(header.slot, 'the header unit must carry its slot id');
+
+    // the tallest banner Google can return is 320x100; the reserved height
+    // must fit it plus the label and the frame padding.
+    const reserved = cfg.adsense.reserveHeight.header;
+    assert.ok(reserved >= 100 + 45, `the reserved height (${reserved}px) must fit a 320x100 banner`);
+
+    // the sidebar stays responsive: inside a 300px column Google picks a
+    // 300x250 or a 300x600, and the reserved height covers the tallest one
+    const sidebar = await page.$eval('[data-ad-placement="sidebar"] ins', (el) => el.dataset.adFormat);
+    assert.equal(sidebar, 'auto', 'the sidebar unit stays responsive');
+    const sidebarReserved = cfg.adsense.reserveHeight.sidebar;
+    assert.ok(sidebarReserved >= 600 + 45,
+      `the reserved height (${sidebarReserved}px) must fit a 300x600 unit`);
     await context.close();
   });
 

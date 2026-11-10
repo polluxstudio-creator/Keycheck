@@ -1316,11 +1316,6 @@ small {
   margin-right: auto;
 }
 
-@media (min-width: 768px) {
-  .ad-slot--reserved[data-ad-placement="header"] {
-    min-height: var(--ad-reserve-desktop, var(--ad-reserve, 0px));
-  }
-}
 
 .ad-slot__label {
   display: block;

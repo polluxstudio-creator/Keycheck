@@ -48,18 +48,14 @@
       "betweenSections": 0
     },
     "reserveHeight": {
-      "header": 285,
-      "sidebar": 625,
+      "header": 150,
+      "sidebar": 650,
       "belowTester": 285,
       "betweenSections": 285
     },
     "label": "Advertisement",
-    "reserveHeightNote": "Altura TOTAL del hueco (etiqueta + unidad). El valor por defecto (285) cubre una unidad responsiva de 300x250; ajústalo al tuyo: ~115 para 728x90, ~285 para 300x250, ~625 para 300x600 vertical.",
-    "reserveHeightDesktop": {
-      "header": 130,
-      "headerNote": "En escritorio el hueco de cabecera se limita a 728px de ancho, asi que Google sirve un banner horizontal de 728x90 (100px). Con el movil se reserva el alto maximo (300x250), que no empuja el contenido."
-    },
-    "formatsNote": "Las dos unidades se crean como 'Adaptable' (responsive), asi que data-ad-format vale 'auto' en los dos huecos. El lateral mide 300px de ancho, asi que Google sirve un 300x250 o un 300x600."
+    "reserveHeightNote": "Altura TOTAL del hueco (etiqueta + unidad). La cabecera usa 150px porque pide un banner horizontal (728x90 o 320x100); el lateral 650px para un 300x600.",
+    "formatsNote": "La cabecera va en 'horizontal' para que Google solo sirva banners (altura <=100px) y el hueco no crezca por debajo. El lateral va en 'auto' dentro de una columna de 300px, donde Google sirve un 300x250 o un 300x600."
   },
   "seo": {
     "pages": [

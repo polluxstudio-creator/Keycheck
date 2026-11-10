@@ -88,7 +88,11 @@
     ins.style.display = 'block';
     ins.setAttribute('data-ad-client', cfg.publisherId.trim());
     ins.setAttribute('data-ad-slot', slotId);
-    ins.setAttribute('data-ad-format', (cfg.formats || {})[placement] === 'vertical' ? 'vertical' : 'auto');
+    // "horizontal" restricts the ad to banner sizes (728x90, 320x100...): with
+    // "auto" Google serves rectangles (300x250) in wide slots, which makes the
+    // reserved space grow and shifts the page down.
+    const fmt = (cfg.formats || {})[placement];
+    ins.setAttribute('data-ad-format', fmt === 'vertical' ? 'vertical' : fmt === 'horizontal' ? 'horizontal' : 'auto');
     ins.setAttribute('data-full-width-responsive', 'true');
 
     frame.appendChild(ins);
