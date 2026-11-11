@@ -283,9 +283,7 @@ const adsenseLine = config.adsense.publisherId
 
 await writeFile(
   path.join(DIST, 'ads.txt'),
-  `# KEYCHECK ads.txt
-# This file is verified by Google AdSense. Replace the placeholder below with the
-# exact line shown in your AdSense dashboard (Account > Ads.txt).
+  `# KEYCHECK — authorized sellers for Google AdSense
 ${adsenseLine}
 `,
   'utf8'
