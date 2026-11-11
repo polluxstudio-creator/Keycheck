@@ -96,9 +96,40 @@ async function renderOg() {
   console.log('• og-image.png 1200x630');
 }
 
+/* --------------------------------------------------------------- logo
+   Square brand mark (the "KC" badge of the header) on a transparent
+   background. Used as the site logo of the Google consent message, which
+   is displayed on a light panel. */
+async function renderLogo(size, file) {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: size, height: size }, deviceScaleFactor: 1 });
+  const pad = Math.round(size * 0.06);
+  const inner = size - pad * 2;
+  const radius = Math.round(inner * 0.22);
+  const fontSize = Math.round(inner * 0.42);
+  await page.setContent(
+    `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+      html,body{margin:0;padding:0;background:transparent}
+      .wrap{width:${size}px;height:${size}px;display:grid;place-items:center}
+      .mark{
+        width:${inner}px;height:${inner}px;border-radius:${radius}px;
+        background:linear-gradient(140deg,#35d399,#22a97c);
+        color:#04140d;font-family:system-ui,-apple-system,"Segoe UI",Roboto,
+          "Helvetica Neue",Arial,sans-serif;font-weight:900;font-size:${fontSize}px;
+        display:flex;align-items:center;justify-content:center;letter-spacing:-0.02em;
+      }
+     </style></head><body><div class="wrap"><div class="mark">KC</div></div></body></html>`
+  );
+  await page.screenshot({ path: path.join(IMG, file), omitBackground: true });
+  await browser.close();
+  console.log('•', file, `${size}x${size}`);
+}
+
 await mkdir(IMG, { recursive: true });
 await renderIcon(180, 'apple-touch-icon.png');
 await renderIcon(192, 'icon-192.png');
 await renderIcon(512, 'icon-512.png');
+await renderLogo(512, 'logo-512.png');
+await renderLogo(192, 'logo-192.png');
 await renderOg();
 console.log('done');
