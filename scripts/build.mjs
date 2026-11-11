@@ -191,6 +191,20 @@ for (const rel of files) {
   await copyFile(from, to);
 }
 
+// Files under static/ are copied verbatim: no tokens, no partials and they
+// never reach the sitemap. Used for the verification files Google asks to
+// host at the root of the domain (e.g. google-site-verification-*.html).
+log('copying static files');
+const STATIC_DIR = path.join(ROOT, 'static');
+if (existsSync(STATIC_DIR)) {
+  for (const rel of await walk(STATIC_DIR)) {
+    const from = path.join(STATIC_DIR, rel);
+    const to = path.join(DIST, rel);
+    await mkdir(path.dirname(to), { recursive: true });
+    await copyFile(from, to);
+  }
+}
+
 log('processing pages');
 const htmlFiles = files.filter((f) => /\.html$/i.test(f) && !f.startsWith('partials/'));
 for (const rel of htmlFiles) {
