@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Test Your Keyboard: 5 Methods Online and Offline | {{SITE_NAME}}</title>
+<meta name="description" content="Five practical ways to test a keyboard: an instant browser test, the built-in Windows and macOS test, the BIOS screen, a dedicated app and a physical check. What each one proves.">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<!-- Google CMP requires a referrer policy that allows cross-origin sharing -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="{{THEME_COLOR}}">
+{{ADSENSE_META}}
+{{THEME_BOOTSTRAP}}
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="{{SITE_NAME}}">
+<meta property="og:title" content="How to Test Your Keyboard: 5 Methods | {{SITE_NAME}}">
+<meta property="og:description" content="An instant browser test, the built-in OS test, the BIOS screen, a dedicated app and a physical check — what each method proves.">
+<meta property="og:url" content="{{CANONICAL}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Test Your Keyboard: 5 Methods | {{SITE_NAME}}">
+<meta name="twitter:description" content="Compare five ways to test a keyboard and learn what each one actually proves.">
+<meta name="twitter:image" content="{{OG_IMAGE}}">
+
+<link rel="icon" href="{{BASE}}assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{BASE}}assets/img/apple-touch-icon.png">
+<link rel="manifest" href="{{BASE}}site.webmanifest">
+<link rel="stylesheet" href="{{BASE}}assets/css/styles.css">
+</head>
+<body>
+
+<!-- @include header -->
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero__eyebrow"><span aria-hidden="true">●</span> Guide</p>
+      <h1>How to test your keyboard</h1>
+      <p class="lead">
+        A key that does not respond is one of the most annoying faults you can own, because it is invisible until
+        the moment you need it. There are five practical ways to test a keyboard, and they are not equally
+        useful: some tell you whether the operating system receives your key presses, others tell you whether the
+        hardware is physically alive. This guide compares them so you can pick the right one for the fault you are
+        actually seeing.
+      </p>
+    </section>
+
+    <div class="ad-slot" data-ad-placement="header" aria-label="Advertisement"></div>
+
+    <div class="layout">
+      <div class="layout__main">
+        <article class="prose">
+          <h2 id="five-methods">The five methods at a glance</h2>
+          <p>
+            Every method below answers a slightly different question. Read the table first: it tells you which one
+            you need for the symptom you have, and saves you from testing in the wrong order.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Takes</th>
+                <th>Proves</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Browser test</strong></td>
+                <td>10 seconds</td>
+                <td>The OS delivers your key presses to a web page</td>
+              </tr>
+              <tr>
+                <td><strong>2. Built-in OS test</strong></td>
+                <td>2 minutes</td>
+                <td>The OS recognises the key and can report its code</td>
+              </tr>
+              <tr>
+                <td><strong>3. BIOS / UEFI screen</strong></td>
+                <td>5 minutes</td>
+                <td>The hardware works before the OS loads</td>
+              </tr>
+              <tr>
+                <td><strong>4. Dedicated app</strong></td>
+                <td>5 minutes</td>
+                <td>Key codes, scancodes and every key at once</td>
+              </tr>
+              <tr>
+                <td><strong>5. Physical check</strong></td>
+                <td>10 minutes</td>
+                <td>Nothing electrical — only contamination and damage</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2 id="method-1">Method 1: the browser test (fastest)</h2>
+          <p>
+            Start here. Open the
+            <a href="{{ROOT}}#keyboard">keyboard test</a> in your browser, click once so the page has focus,
+            and start typing. Every key you press lights up green, and the counters on the right show how many
+            presses you made and how many <em>different</em> keys you reached.
+          </p>
+          <p>
+            This is enough to answer the most common question: <strong>"is my keyboard broken, or is it just this
+            application?"</strong> If every key lights up here, the keyboard is delivering key events correctly and
+            the problem is somewhere else — a shortcut, a language layout, a stuck modifier, or the app itself.
+          </p>
+          <p>
+            Two details make the difference between a useful test and a frustrating one. First, the tester
+            distinguishes <em>unique keys</em> from <em>total presses</em>, so a key that fires twice when you
+            press it once is visible as an anomaly rather than hidden by a large counter. Second, it shows
+            modifier keys (Shift, Ctrl, Alt, Meta) separately, which is how you catch a modifier that is stuck
+            down — the classic cause of "my keyboard types in caps all the time".
+          </p>
+          <p>
+            A browser test cannot tell you about switch wear, because a worn switch still produces a valid key
+            event. It can, however, tell you about ghosting, double-fire and modifier problems, which together
+            account for most of what people describe as "the keyboard is broken".
+          </p>
+
+          <h2 id="method-2">Method 2: the built-in operating system test</h2>
+          <p>
+            Both major desktop operating systems ship with a keyboard diagnostic that reports the raw scan code of
+            every key. It is hidden, but it is there.
+          </p>
+          <h3 id="windows-os">On Windows</h3>
+          <p>
+            Press <strong>Win + Ctrl + O</strong>. A small panel appears that shows the character, the scan code
+            and the virtual key code of whatever you press next. Press the key you suspect:
+          </p>
+          <ul>
+            <li><strong>The character lights up</strong> → the key reaches Windows. The fault is in the application or in a shortcut.</li>
+            <li><strong>Nothing happens</strong> → the key never reaches the OS. Continue with method 3.</li>
+          </ul>
+          <p>
+            A useful companion is <strong>On-Screen Keyboard</strong> (search for it in the Start menu). Clicking
+            a key on the on-screen keyboard types that character. If the on-screen keyboard types a character
+            but the physical key does not, the fault is unambiguously in the keyboard.
+          </p>
+          <h3 id="macos-os">On macOS</h3>
+          <p>
+            There is no direct equivalent shortcut, but the <strong>Keyboard Viewer</strong> (Accessibility →
+            Keyboard → Accessibility Keyboard, or Input menu → Show Keyboard Viewer) highlights the key you
+            press in real time. If a key never highlights, it never reaches the system.
+          </p>
+
+          <h2 id="method-3">Method 3: the BIOS / UEFI setup screen</h2>
+          <p>
+            This is the only method that tests the keyboard <em>without</em> the operating system. Restart the
+            machine and repeatedly press <strong>Del</strong>, <strong>F2</strong> or <strong>Esc</strong> during
+            boot to enter the setup screen. The BIOS has its own text input fields that work long before Windows
+            or macOS loads.
+          </p>
+          <p>
+            Type into the BIOS fields. This one test separates two very different problems:
+          </p>
+          <ul>
+            <li><strong>The key works in the BIOS</strong> → the hardware is fine. The fault is in the operating system, a driver, or a software remapping.</li>
+            <li><strong>The key does not work in the BIOS</strong> → the fault is in the hardware itself: a failed switch, a torn membrane or a broken cable.</li>
+          </ul>
+          <p>
+            On a laptop with a <strong>built-in keyboard</strong>, also test the <strong>external keyboard port</strong>
+            with a second keyboard. If the external keyboard works and the internal one does not, the problem is
+            the internal keyboard assembly — the membrane, the flex cable or the keyboard backlight ribbon —
+            not the individual key.
+          </p>
+
+          <h2 id="method-4">Method 4: a dedicated keyboard test application</h2>
+          <p>
+            A desktop application gives you more detail than a browser: it shows the raw scancode, highlights keys
+            simultaneously, and often records how many keys are held down at the same time. That last number is
+            how you detect <strong>ghosting</strong> — a gaming keyboard that reports three keys when you press
+            two.
+          </p>
+          <p>
+            The practical value is that these tools can distinguish an intermittent fault that only appears
+            after several minutes of use, and they keep a log you can paste into a support request. If your key
+            only fails intermittently, a test you run for thirty seconds will not find it — run a browser test
+            and leave it open while you work.
+          </p>
+
+          <h2 id="method-5">Method 5: the physical check</h2>
+          <p>
+            When every electronic test passes but the key still misbehaves, the problem is physical. This applies
+            mostly to laptops, where dust, sugar residue and liquid are common causes.
+          </p>
+          <ol>
+            <li><strong>Power off and unplug</strong> before opening anything. On a laptop, disconnect the battery if it is removable.</li>
+            <li><strong>Look for residue.</strong> Sticky keys are almost always sugar or spilled liquid. Clean with 90% isopropyl alcohol and a soft brush.</li>
+            <li><strong>Check the keycap and the switch.</strong> A keycap that has been twisted or re-seated repeatedly can sit a fraction of a millimetre off, so the switch never fully closes.</li>
+            <li><strong>Look at the flex ribbon cable</strong> on a laptop. A connector that is not fully seated causes exactly this symptom: several keys dead at once, in a pattern.</li>
+            <li><strong>Test again</strong> with method 1 before and after.</li>
+          </ol>
+          <p>
+            If several keys die at the same time, that pattern points at the membrane or the ribbon cable rather
+            than at individual switches — the opposite of what most people assume. See the
+            <a href="{{BASE}}guides/diagnostico">diagnostics guide</a> for the full decision tree.
+          </p>
+
+          <h2 id="which-one">Which method should you use?</h2>
+          <p>
+            A short decision path, based on the symptom:
+          </p>
+          <ul>
+            <li><strong>One key never responds</strong> → method 1, then 2, then 3.</li>
+            <li><strong>Several keys dead together</strong> → method 1, then 3, then 5 (look at the ribbon cable).</li>
+            <li><strong>Key repeats or fires twice</strong> → method 1. The tester counts presses and unique keys separately, so the mismatch is obvious.</li>
+            <li><strong>Wrong characters appear</strong> → method 1. Check which modifier is stuck.</li>
+            <li><strong>Key works in another app but not in one</strong> → it is a software problem. Stop testing hardware.</li>
+          </ul>
+
+          <h2 id="faq">Frequently asked questions</h2>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Does this online keyboard test send my keystrokes anywhere?</summary>
+              <div class="faq-item__body">
+                <p>
+                  No. The tester runs entirely in your browser. Key presses are handled by a script that only
+                  draws them on screen; nothing is uploaded, logged or stored on a server. You can confirm this
+                  by opening your browser's network tab while you type: there is no request containing what you
+                  type. The details are in the <a href="{{BASE}}privacy">Privacy Policy</a>.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why does my keyboard type the wrong letters?</summary>
+              <div class="faq-item__body">
+                <p>
+                  Three causes account for almost every case: a stuck modifier key (Shift or Caps Lock left
+                  on), a different keyboard layout selected in the operating system than the one printed on the
+                  keycaps, or a software remapping application. Run the browser test and look at the modifier
+                  row: if Shift stays highlighted when you are not touching it, that is the answer. If every key
+                  lights up correctly but the character printed is different, compare your layout with the
+                  physical legends.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Can I test a laptop keyboard without opening it?</summary>
+              <div class="faq-item__body">
+                <p>
+                  Yes. Start with the browser test and the BIOS screen. Both work on a closed laptop. A BIOS
+                  test that fails on the built-in keyboard but passes on a USB keyboard confirms the fault is in
+                  the internal keyboard assembly, which is what tells you whether a repair is worth it.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Why does my key only fail sometimes?</summary>
+              <div class="faq-item__body">
+                <p>
+                  Intermittent faults are common with a worn switch, a marginal cable contact or a wireless
+                  receiver losing the signal. A short test will not find them. Leave the browser test open in a
+                  second window while you work and watch the counter: if the key that misbehaves never lights up
+                  even once, the fault is confirmed and reproducible enough to act on.
+                </p>
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Does the tester work with wireless keyboards?</summary>
+              <div class="faq-item__body">
+                <p>
+                  Yes. The browser receives whatever the operating system delivers, and the operating system
+                  receives whatever the wireless receiver delivers. If a wireless keyboard drops the connection,
+                  its keys simply stop appearing in the tester, which is itself useful information: it tells you
+                  the fault is in the radio link, not in the switches.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this online keyboard test send my keystrokes anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The tester runs entirely in your browser. Key presses are handled by a script that only draws them on screen; nothing is uploaded, logged or stored on a server. You can confirm this by opening your browser's network tab while you type: there is no request containing what you type. The details are in the Privacy Policy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my keyboard type the wrong letters?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Three causes account for almost every case: a stuck modifier key (Shift or Caps Lock left on), a different keyboard layout selected in the operating system than the one printed on the keycaps, or a software remapping application. Run the browser test and look at the modifier row: if Shift stays highlighted when you are not touching it, that is the answer. If every key lights up correctly but the character printed is different, compare your layout with the physical legends."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test a laptop keyboard without opening it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Start with the browser test and the BIOS screen. Both work on a closed laptop. A BIOS test that fails on the built-in keyboard but passes on a USB keyboard confirms the fault is in the internal keyboard assembly, which is what tells you whether a repair is worth it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my key only fail sometimes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Intermittent faults are common with a worn switch, a marginal cable contact or a wireless receiver losing the signal. A short test will not find them. Leave the browser test open in a second window while you work and watch the counter: if the key that misbehaves never lights up even once, the fault is confirmed and reproducible enough to act on."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the tester work with wireless keyboards?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The browser receives whatever the operating system delivers, and the operating system receives whatever the wireless receiver delivers. If a wireless keyboard drops the connection, its keys simply stop appearing in the tester, which is itself useful information: it tells you the fault is in the radio link, not in the switches."
+      }
+    }
+  ]
+}
+</script>
+        </article>
+
+        <div class="ad-slot" data-ad-placement="betweenSections" aria-label="Advertisement"></div>
+
+        <section class="more-guides">
+          <h2>More guides</h2>
+          <div class="grid-2">
+            <article class="guide-card">
+              <h3>Complete diagnostics guide</h3>
+              <p>
+                Step-by-step methods to isolate a keyboard or mouse fault: verifying a single key, checking a
+                wireless connection, understanding double-click problems and fixing the most common input issues.
+              </p>
+              <p><a href="{{BASE}}guides/diagnostico">Read the diagnostics guide →</a></p>
+            </article>
+            <article class="guide-card">
+              <h3>Keyboard shortcuts cheat sheet</h3>
+              <p>
+                The shortcuts that actually save time, on Windows, macOS and Linux — plus the browser shortcuts
+                worth knowing, and a printable table.
+              </p>
+              <p><a href="{{BASE}}guides/keyboard-shortcuts">Read the cheat sheet →</a></p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="layout__side">
+        <div class="ad-slot" data-ad-placement="sidebar" aria-label="Advertisement"></div>
+        <div class="side-card">
+          <h2>Test it right now</h2>
+          <p>Open the tester and press every key, one at a time. It takes ten seconds.</p>
+          <p><a class="btn btn--primary btn--sm" href="{{ROOT}}#keyboard">Open the keyboard test</a></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- @include footer -->
+
+</body>
+</html>

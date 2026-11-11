@@ -679,6 +679,8 @@ describe('pages, SEO and accessibility', () => {
     ['/', 'Free Online Keyboard & Mouse Tester'],
     ['/guides/diagnostico', 'Keyboard & Mouse Diagnostics Guide'],
     ['/guides/faq', 'Frequently Asked Questions'],
+    ['/guides/how-to-test-keyboard', 'How to Test Your Keyboard'],
+    ['/guides/keyboard-shortcuts', 'Keyboard Shortcuts Cheat Sheet'],
     ['/about', 'About'],
     ['/contact', 'Contact'],
     ['/privacy', 'Privacy Policy'],
@@ -713,6 +715,8 @@ describe('pages, SEO and accessibility', () => {
     const hrefs = await page.$$eval('a[href]', (els) => els.map((e) => e.getAttribute('href')));
     assert.ok(hrefs.some((h) => h.includes('guides/diagnostico')));
     assert.ok(hrefs.some((h) => h.includes('guides/faq')));
+    assert.ok(hrefs.some((h) => h.includes('guides/how-to-test-keyboard')));
+    assert.ok(hrefs.some((h) => h.includes('guides/keyboard-shortcuts')));
     assert.ok(hrefs.some((h) => h.includes('privacy')));
     assert.ok(hrefs.some((h) => h.includes('terms')));
     assert.ok(

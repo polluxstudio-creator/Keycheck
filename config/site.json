@@ -75,6 +75,16 @@
         "changefreq": "monthly"
       },
       {
+        "path": "guides/how-to-test-keyboard.html",
+        "priority": "0.8",
+        "changefreq": "monthly"
+      },
+      {
+        "path": "guides/keyboard-shortcuts.html",
+        "priority": "0.8",
+        "changefreq": "monthly"
+      },
+      {
         "path": "about.html",
         "priority": "0.5",
         "changefreq": "yearly"
