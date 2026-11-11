@@ -36,7 +36,7 @@ let base;
 let adsBase;
 let liveBase;
 
-const build = (out, forceAds, autoAds, noAds) => {
+const build = (out, forceAds, autoAds, noAds, selfBanner) => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'build.mjs')], {
     cwd: ROOT,
     env: {
@@ -44,7 +44,8 @@ const build = (out, forceAds, autoAds, noAds) => {
       KEYCHECK_OUT: out,
       KEYCHECK_FORCE_ADS: forceAds ? '1' : '0',
       KEYCHECK_AUTO_ADS: autoAds ? '1' : '0',
-      KEYCHECK_NO_ADS: noAds ? '1' : '0'
+      KEYCHECK_NO_ADS: noAds ? '1' : '0',
+      KEYCHECK_SELF_BANNER: selfBanner ? '1' : '0'
     },
     stdio: 'pipe'
   });
@@ -73,7 +74,8 @@ before(async () => {
   // dist-auto : the same, but with auto ads
   build('dist', false);
   build('dist-noads', false, false, true);
-  build('dist-ads', true);
+  // dist-ads: fake ad units AND the self-built banner, to test the consent gate
+  build('dist-ads', true, false, false, true);
   build('dist-auto', true, '1');
   server = await startServer('dist-noads', PORT);
   adsServer = await startServer('dist-ads', ADS_PORT);
@@ -105,6 +107,13 @@ async function open(url, opts = {}) {
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('request', (r) => requests.push(r.url()));
   if (opts.initScript) await page.addInitScript(opts.initScript);
+  // The stub must be registered BEFORE the navigation: with Google's CMP the
+  // ad script is requested on page load, with no click involved.
+  if (opts.stubAds) {
+    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
+    );
+  }
   await page.goto(url, { waitUntil: 'load' });
   await page.waitForTimeout(150);
   return { page, context, errors, requests };
@@ -507,12 +516,9 @@ describe('advertising', () => {
 
   test('the production build serves exactly the ad units of the configuration', async () => {
     const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
-    const { page, context } = await open(`${liveBase}/index.html`);
-    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
-      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
-    );
-    await page.click('[data-consent-accept]');
-    await page.waitForTimeout(500);
+    const { page, context } = await open(`${liveBase}/index.html`, { stubAds: true });
+    // the production build uses Google's CMP: nothing has to be clicked
+    await page.waitForTimeout(700);
 
     const ins = await page.$$eval('[data-ad-placement] ins', (els) =>
       els.map((el) => ({
@@ -533,6 +539,25 @@ describe('advertising', () => {
       .map(([placement]) => placement);
     assert.deepEqual(ins.map((u) => u.placement).sort(), configured.sort(),
       'only the configured placements may be served');
+    await context.close();
+  });
+
+  test('with Google CMP the ad script loads without asking and our banner stays hidden', async () => {
+    const { page, context, requests } = await open(`${liveBase}/index.html`, { stubAds: true });
+    await page.waitForTimeout(700);
+
+    // Google's own crawler never clicks a banner: the script must load anyway
+    const script = requests.filter((u) => u.includes('pagead2.googlesyndication.com'));
+    assert.ok(script.length >= 1, 'the AdSense script must load without a consent decision');
+    assert.match(script[0], /client=ca-pub-/, 'the script must carry the publisher id');
+
+    // our own banner must not be shown
+    assert.equal(await page.getAttribute('#consent-banner', 'data-open'), 'false',
+      'our banner must stay hidden when Google manages the consent');
+
+    // the ad units are rendered
+    const units = await page.$$eval('[data-ad-placement] ins', (els) => els.length);
+    assert.ok(units >= 1, 'the ad units must be rendered');
     await context.close();
   });
 
@@ -568,12 +593,8 @@ describe('advertising', () => {
 
   test('the header unit asks for a banner and the reserved space covers it', async () => {
     const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
-    const { page, context } = await open(`${adsBase}/index.html`);
-    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
-      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
-    );
-    await page.click('[data-consent-accept]');
-    await page.waitForTimeout(500);
+    const { page, context } = await open(`${liveBase}/index.html`, { stubAds: true });
+    await page.waitForTimeout(700);
 
     const header = await page.$eval('[data-ad-placement="header"] ins', (el) => ({
       format: el.dataset.adFormat,
@@ -599,7 +620,8 @@ describe('advertising', () => {
   });
 
   test('the layout does not jump when the ad arrives', async () => {
-    const { page, context } = await open(`${adsBase}/index.html`, {
+    const { page, context } = await open(`${liveBase}/index.html`, {
+      stubAds: true,
       initScript: () => {
         window.__shifts = [];
         new PerformanceObserver((l) => {
@@ -607,11 +629,7 @@ describe('advertising', () => {
         }).observe({ type: 'layout-shift', buffered: true });
       }
     });
-    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
-      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
-    );
-    await page.click('[data-consent-accept]');
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(700);
     // simulate the real height of a 728x90 unit
     await page.evaluate(() => {
       document.querySelectorAll('[data-ad-placement] ins').forEach((el) => {
@@ -632,12 +650,10 @@ describe('advertising', () => {
       env: { ...process.env, KEYCHECK_OUT: 'dist-auto', KEYCHECK_FORCE_ADS: '1', KEYCHECK_AUTO_ADS: '1' },
       stdio: 'pipe'
     });
-    const { page, context, requests } = await open(`http://127.0.0.1:${AUTO_PORT}/index.html`);
-    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
-      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed */' })
-    );
-    await page.click('[data-consent-accept]');
-    await page.waitForTimeout(400);
+    const { page, context, requests } = await open(`http://127.0.0.1:${AUTO_PORT}/index.html`, {
+      stubAds: true
+    });
+    await page.waitForTimeout(700);
 
     const pushed = await page.evaluate(() => (window.adsbygoogle || []).map((a) => a.enable_page_level_ads));
     assert.ok(pushed.includes(true), 'the auto ads payload must be queued');
@@ -646,14 +662,11 @@ describe('advertising', () => {
   });
 
   test('the sidebar unit is not rendered on small screens', async () => {
-    const { page, context } = await open(`${adsBase}/index.html`, {
+    const { page, context } = await open(`${liveBase}/index.html`, {
+      stubAds: true,
       context: { viewport: { width: 480, height: 900 } }
     });
-    await page.route('**/pagead2.googlesyndication.com/**', (route) =>
-      route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
-    );
-    await page.click('[data-consent-accept]');
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(700);
     const sidebar = await page.$$eval('[data-ad-placement="sidebar"] ins', (els) => els.length);
     assert.equal(sidebar, 0, 'the vertical unit must not be injected below 1024px');
     await context.close();

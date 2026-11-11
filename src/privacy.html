@@ -59,8 +59,9 @@
           <ul>
             <li>The keyboard and mouse tester runs entirely in your browser. What you type and click is <strong>not</strong> transmitted to any server and is <strong>not</strong> stored anywhere.</li>
             <li>There is no account system, no analytics package and no behaviour tracking in the tool.</li>
-            <li>This site may display advertising served by Google AdSense. That is the only third-party technology involved, and it is only loaded after you make a consent choice.</li>
-            <li>The only thing this site stores on your device is your consent decision, in your browser's local storage.</li>
+            <li>This site may display advertising served by Google AdSense. That is the only third-party technology involved.</li>
+            <li>The consent message you may see is served by Google's own consent management platform (Google Privacy &amp; messaging / Google Funding Choices), which is the certified consent platform required for sites that show personalised advertising in the European Economic Area, the United Kingdom and Switzerland.</li>
+            <li>This site itself stores nothing about you in your browser's local storage apart from your light/dark theme preference.</li>
           </ul>
 
           <h2>2. Who is responsible for this site</h2>
@@ -91,18 +92,22 @@
 
           <h2>4. Data stored in your browser</h2>
           <p>
-            When advertising is enabled, this site stores a single record in your browser's local storage to remember
-            your consent decision and the date you made it:
+            This site stores a single record in your browser's local storage to remember whether you prefer the
+            light or the dark theme:
           </p>
           <ul>
-            <li><strong>Name:</strong> <code>keycheck.consent.v1</code></li>
-            <li><strong>Content:</strong> your choice (<code>granted</code> or <code>denied</code>) and a timestamp</li>
-            <li><strong>Purpose:</strong> to avoid asking again on every visit and to keep advertising cookies switched off while you have declined</li>
+            <li><strong>Name:</strong> <code>kc-theme</code></li>
+            <li><strong>Content:</strong> <code>light</code> or <code>dark</code></li>
+            <li><strong>Purpose:</strong> to keep the theme you chose on your next visit</li>
           </ul>
           <p>
             This record is not linked to any identifier, is never sent to us and can be removed at any time by
-            clearing the site data of this site in your browser. You can also change your decision whenever you want
-            through the <em>Cookie settings</em> link in the footer.
+            clearing the site data of this site in your browser.
+          </p>
+          <p>
+            Your advertising consent choice is not stored by this site: it is handled by Google's consent platform
+            in its own cookies. You can review and change that decision at any time through the
+            <em>Cookie settings</em> link in the footer.
           </p>
 
           <h2>5. Advertising</h2>
@@ -118,10 +123,12 @@
             <li>Third-party vendors, including Google, may use cookies to serve ads based on the content of this site and/or the ad you clicked on.</li>
           </ul>
           <p>
-            The advertising code is loaded only after you accept advertising cookies. If you decline, no advertising
-            script is requested from Google at all and the page contains no ad slots. On deployments where advertising
-            is switched off in the configuration, the same applies permanently: no advertising code is loaded and no
-            ad space is reserved.
+            The advertising code is loaded on every page, which is the standard AdSense implementation and what
+            Google's own consent platform requires. What changes with your consent is what Google is allowed to do:
+            visitors in the European Economic Area, the United Kingdom and Switzerland are asked first by Google's
+            consent message, and until they agree no personalised advertising is served to them. Visitors who decline
+            only receive non-personalised advertising. Visitors outside those regions are served advertising
+            normally, without being asked.
           </p>
           <p>You can find out more about how Google uses data on advertising sites here:</p>
           <ul>
@@ -133,15 +140,16 @@
 
           <h2>6. Consent management</h2>
           <p>
-            When advertising is active, a consent banner asks you to accept or decline advertising cookies before
-            anything is loaded from Google. Your choice is remembered locally and can be changed later through the
-            <em>Cookie settings</em> link in the footer. If you decline, advertising code is not loaded.
+            This site relies on Google's own consent management platform (Google Privacy &amp; messaging, formerly
+            Google Funding Choices). That is the certified consent platform that Google requires from sites serving
+            personalised advertising in the European Economic Area, the United Kingdom and Switzerland, and it is
+            the one used in this deployment.
           </p>
           <p>
-            Websites that include Google AdSense are commonly required to use Google's own consent management
-            platform (Google Funding Choices) rather than a self-built banner, because it reflects the consent
-            signals Google needs. If you deploy this site with advertising enabled, use the consent platform that
-            Google provides for your account — that is the configuration we recommend.
+            The message asks you whether your data may be used to show personalised advertising, and it is served by
+            Google itself. If you live outside those regions you may not see it at all. You can change your decision
+            whenever you want through the <em>Cookie settings</em> link in the footer, which reopens Google's consent
+            message.
           </p>
 
           <h2>7. Server logs</h2>

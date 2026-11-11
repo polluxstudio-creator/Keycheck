@@ -219,6 +219,13 @@ const runtimeConfig = {
 
 runtimeConfig.adsense = effectiveAds();
 
+// KEYCHECK_SELF_BANNER=1 builds the alternative mode where the site uses its
+// own consent banner instead of Google's certified CMP. The test suite uses it
+// to check that the ad code is not requested before the visitor decides.
+if (process.env.KEYCHECK_SELF_BANNER === '1') {
+  runtimeConfig.consent = { ...config.consent, useGoogleCmp: false };
+}
+
 await mkdir(path.join(DIST, 'assets', 'js'), { recursive: true });
 await writeFile(
   path.join(DIST, 'assets', 'js', 'site-config.js'),

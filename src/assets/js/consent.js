@@ -85,27 +85,36 @@
     if (acceptBtn) acceptBtn.addEventListener('click', () => decide('granted'));
     if (declineBtn) declineBtn.addEventListener('click', () => decide('denied'));
 
+    // When Google's consent platform (Privacy & messaging / Funding Choices) is
+    // active it manages the consent on its own: our banner is never shown and
+    // the ad script is loaded normally, so Google's own crawler sees the tag.
+    const googleCmp = !!cfg.useGoogleCmp;
+
     settingsBtns.forEach((btn) =>
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        if (googleCmp) {
+          // Reopen Google's consent message so the visitor can change the choice.
+          const fc = window.googlefc;
+          if (fc && typeof fc.showRevocationMessage === 'function') fc.showRevocationMessage();
+          return;
+        }
         show();
       })
     );
+
+    if (googleCmp) {
+      current = 'granted';
+      hide();
+      onDecision('granted');
+      return;
+    }
 
     const stored = readStored();
     if (stored) {
       current = stored;
       hide();
       onDecision(stored);
-      return;
-    }
-
-    // When Google Funding Choices is active it manages the consent itself:
-    // our own banner stays hidden and the ad script loads normally.
-    if (cfg.useGoogleCmp) {
-      current = 'granted';
-      hide();
-      onDecision('granted');
       return;
     }
 
