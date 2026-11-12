@@ -114,6 +114,18 @@ async function open(url, opts = {}) {
       route.fulfill({ status: 200, contentType: 'application/javascript', body: '/* stubbed for the test */' })
     );
   }
+  // The CMP runtime is stubbed the same way: the test must not depend on
+  // Google's servers being reachable. The stub defines the same global the
+  // real runtime does.
+  if (opts.stubCmp) {
+    await page.route('**/fundingchoicesmessages.google.com/**', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/javascript',
+        body: 'window.googlefc = window.googlefc || {}; window.googlefc.__fci = [];'
+      })
+    );
+  }
   await page.goto(url, { waitUntil: 'load' });
   await page.waitForTimeout(150);
   return { page, context, errors, requests };
@@ -558,6 +570,48 @@ describe('advertising', () => {
     // the ad units are rendered
     const units = await page.$$eval('[data-ad-placement] ins', (els) => els.length);
     assert.ok(units >= 1, 'the ad units must be rendered');
+    await context.close();
+  });
+
+  test('the Google CMP runtime is in the head of every page with the publisher id', async () => {
+    // Publishing the message in AdSense is not enough: the CMP runtime has to
+    // be in the page. Without it the consent message never reaches the
+    // visitor and the review cannot confirm that consent management is live.
+    const cfg = JSON.parse(readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
+    const numericId = cfg.adsense.publisherId.replace(/^ca-pub-/, '');
+    const expected = `https://fundingchoicesmessages.google.com/i/pub-${numericId}?ers=1`;
+
+    const pages = [
+      'index.html',
+      'about.html',
+      'contact.html',
+      'privacy.html',
+      'terms.html',
+      'guides/diagnostico.html',
+      'guides/faq.html',
+      'guides/how-to-test-keyboard.html',
+      'guides/keyboard-shortcuts.html'
+    ];
+
+    for (const rel of pages) {
+      const html = readFileSync(path.join(ROOT, 'dist', rel), 'utf8');
+      assert.ok(html.includes(expected), `the CMP runtime must be in ${rel}`);
+      // it has to be in the <head>, not at the end of the body
+      const head = html.slice(0, html.indexOf('</head>'));
+      assert.ok(head.includes(expected), `the CMP runtime must be inside the <head> of ${rel}`);
+      assert.ok(head.includes('googlefcPresent'),
+        `${rel} must signal googlefcPresent so the ads script does not ask for a second CMP`);
+    }
+  });
+
+  test('the CMP runtime is requested and googlefc is defined', async () => {
+    const { page, context, requests } = await open(`${liveBase}/index.html`, { stubAds: true, stubCmp: true });
+    await page.waitForTimeout(1200);
+    const cmp = requests.filter((u) => u.includes('fundingchoicesmessages.google.com'));
+    assert.ok(cmp.length >= 1, 'the CMP runtime must be requested');
+    assert.match(cmp[0], /\/i\/pub-\d+\?ers=1/, 'the CMP runtime must carry the publisher id');
+    assert.ok(await page.evaluate(() => typeof window.googlefc === 'object' && window.googlefc !== null),
+      'googlefc must be defined once the CMP runtime has loaded');
     await context.close();
   });
 

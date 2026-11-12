@@ -50,6 +50,14 @@ function effectiveAds() {
 
 const config = JSON.parse(await readFile(CONFIG_PATH, 'utf8'));
 
+// KEYCHECK_SELF_BANNER=1 builds the alternative mode where the site uses its
+// own consent banner instead of Google's certified CMP. The test suite uses it
+// to check that the ad code is not requested before the visitor decides.
+const SELF_BANNER = process.env.KEYCHECK_SELF_BANNER === '1';
+
+/** True when the site relies on Google's certified CMP (and not on our own). */
+const USE_GOOGLE_CMP = config.consent?.useGoogleCmp === true && !SELF_BANNER;
+
 const log = (...a) => console.log('•', ...a);
 
 /* ------------------------------------------------------------------ */
@@ -205,6 +213,47 @@ if (existsSync(STATIC_DIR)) {
   }
 }
 
+/**
+ * Inserts the Google certified CMP (consent management platform) scripts in
+ * the <head> of every page.
+ *
+ * Publishing the message in AdSense is NOT enough: Google does not inject the
+ * CMP by itself. The publisher has to add the tag, otherwise the consent
+ * message never reaches the visitor and the review cannot confirm that consent
+ * management is really in place. The snippet comes straight from the AdSense
+ * console and has two parts:
+ *
+ *   1. the runtime that shows the message (the publisher id is the numeric
+ *      part of ca-pub-XXXXXXXX, without the prefix);
+ *   2. a hidden "googlefcPresent" iframe that tells the ads script a CMP is
+ *      already on the page, so it does not request a second one.
+ */
+function applyCmpScripts(content) {
+  const ads = effectiveAds();
+  if (!ads.enabled) return content;
+  if (!USE_GOOGLE_CMP) return content;
+  // The QA build (KEYCHECK_FORCE_ADS=1) uses a placeholder publisher id that
+  // does not exist, so there is no CMP to load there.
+  if (FORCE_ADS) return content;
+  const publisherId = String(ads.publisherId || '').trim();
+  if (!/^ca-pub-\d{6,20}$/.test(publisherId)) return content;
+  if (content.includes('fundingchoicesmessages.google.com')) return content; // already there
+
+  const numericId = publisherId.replace(/^ca-pub-/, '');
+  const scripts =
+    `<script async src="https://fundingchoicesmessages.google.com/i/pub-${numericId}?ers=1"></script>\n` +
+    `<script>(function(){function signalGooglefcPresent(){if(!window.frames['googlefcPresent']){` +
+    `if(document.body){const iframe=document.createElement('iframe');` +
+    `iframe.style='width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';` +
+    `iframe.style.display='none';iframe.name='googlefcPresent';document.body.appendChild(iframe);}` +
+    `else{setTimeout(signalGooglefcPresent,0);}}}` +
+    `signalGooglefcPresent();})();</script>`;
+
+  // Right before </head>: the runtime must be in the head, the marker can live
+  // in the body, but keeping both together matches the official snippet.
+  return content.replace('</head>', `${scripts}\n</head>`);
+}
+
 log('processing pages');
 const htmlFiles = files.filter((f) => /\.html$/i.test(f) && !f.startsWith('partials/'));
 for (const rel of htmlFiles) {
@@ -212,6 +261,7 @@ for (const rel of htmlFiles) {
   let html = await resolvePartials(raw);
   html = applyTokens(html, rel);
   html = applyAdReservation(html);
+  html = applyCmpScripts(html);
 
   // Per-page title / description come from the <title> and <meta name="description">
   // placeholders; the PAGE_TITLE / PAGE_DESCRIPTION tokens are filled from config
@@ -236,7 +286,7 @@ runtimeConfig.adsense = effectiveAds();
 // KEYCHECK_SELF_BANNER=1 builds the alternative mode where the site uses its
 // own consent banner instead of Google's certified CMP. The test suite uses it
 // to check that the ad code is not requested before the visitor decides.
-if (process.env.KEYCHECK_SELF_BANNER === '1') {
+if (!USE_GOOGLE_CMP) {
   runtimeConfig.consent = { ...config.consent, useGoogleCmp: false };
 }
 
